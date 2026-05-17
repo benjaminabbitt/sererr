@@ -32,7 +32,7 @@ Documentation = "https://sererr.fyi/docs/python"
 dev = [
     "pytest>=7",
     "pytest-cov>=5",         # coverage during pytest runs
-    "mutmut>=2.5",           # mutation testing
+    "mutmut>=2.5,<3",        # mutation testing — pinned to 2.x; 3.x removed `junitxml` subcommand and broke `paths_to_mutate` config resolution
     "grpcio-tools>=1.60",    # for proto regen
 ]
 

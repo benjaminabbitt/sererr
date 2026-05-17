@@ -1,0 +1,5 @@
+# sererr-flate requires nightly Rust for `proc_macro_span` via
+# `include-flate-codegen`. The other workspace crates build on stable.
+[toolchain]
+channel = "nightly"
+components = ["rustfmt", "clippy"]

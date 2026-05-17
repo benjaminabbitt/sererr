@@ -1,0 +1,18 @@
+--- sererr-proto/src/lib.rs
++++ replace <impl From<ProtoDebugInfo> for sererr::DebugInfo>::from -> Self with Default::default()
+@@ -181,14 +181,11 @@
+             release: e.release,
+             server_name: e.server_name,
+         }
+     }
+ }
+ 
+ impl From<ProtoDebugInfo> for sererr::DebugInfo {
+     fn from(di: ProtoDebugInfo) -> Self {
+-        sererr::DebugInfo {
+-            stack_entries: di.stack_entries,
+-            detail: di.detail,
+-        }
++        Default::default() /* ~ changed by cargo-mutants ~ */
+     }
+ }

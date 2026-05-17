@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace == with != in populate_source_context
+@@ -149,17 +149,17 @@
+ ///
+ /// No-op when the provider returns `None`, when the frame's `line` is
+ /// 0 (unknown), or when the file content is shorter than `frame.line`.
+ pub fn populate_source_context<P: SourceProvider>(
+     frame: &mut StackFrame,
+     provider: &P,
+     surrounding: usize,
+ ) {
+-    if frame.line == 0 {
++    if frame.line != /* ~ changed by cargo-mutants ~ */ 0 {
+         return;
+     }
+     let Some(source) = provider.get_source(&frame.file) else {
+         return;
+     };
+     let lines: Vec<&str> = source.lines().collect();
+     let idx = (frame.line as usize).saturating_sub(1);
+     if idx >= lines.len() {

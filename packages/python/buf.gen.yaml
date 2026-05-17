@@ -1,0 +1,14 @@
+# Generate Python protobuf bindings from the sererr proto module.
+#
+# Run via `just proto-gen` (in this directory). Output lands under
+# src/sererr/proto/_gen/ and is committed — downstream consumers install
+# the package without needing buf installed.
+
+version: v2
+inputs:
+  - directory: ../../proto
+plugins:
+  - remote: buf.build/protocolbuffers/python:v28.2
+    out: src/sererr/proto/_gen
+  - remote: buf.build/protocolbuffers/pyi:v28.2
+    out: src/sererr/proto/_gen

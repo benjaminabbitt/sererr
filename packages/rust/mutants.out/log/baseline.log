@@ -1,0 +1,147 @@
+
+*** baseline
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --verbose --package=sererr@0.1.0 --package=sererr-proto@0.1.0
+       Fresh adler2 v2.0.1
+       Fresh gimli v0.32.3
+       Fresh memchr v2.8.0
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh libc v0.2.186
+       Fresh object v0.37.3
+       Fresh addr2line v0.25.1
+       Fresh miniz_oxide v0.8.9
+       Fresh unicode-ident v1.0.24
+       Fresh either v1.15.0
+       Fresh bytes v1.11.1
+       Fresh backtrace v0.3.76
+       Fresh itertools v0.14.0
+       Fresh proc-macro2 v1.0.106
+       Fresh anyhow v1.0.102
+       Dirty sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr): the file `sererr/src/lib.rs` has changed (1778980551.369672714s, 1s after last build at 1778980550.417678837s)
+   Compiling sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+       Fresh quote v1.0.45
+       Fresh syn v2.0.117
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr --edition=2021 sererr/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=7aa22a09ef871695 -C extra-filename=-fe31dc75abc0f4c4 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib`
+       Fresh prost-derive v0.14.3
+       Fresh prost v0.14.3
+       Dirty sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto): the file `sererr-proto/src/lib.rs` has changed (1778980559.301621792s, 1s after last build at 1778980558.361627817s)
+   Compiling sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name source_provider_test --edition=2021 sererr/tests/source_provider_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=99895e4ef7afd86d -C extra-filename=-6752bef0baffa3d9 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr_proto --edition=2021 sererr-proto/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=acb09726e80c6705 -C extra-filename=-523f71996e45a5a6 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rmeta --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rmeta`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr_proto --edition=2021 sererr-proto/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=73955f869661a234 -C extra-filename=-4ab3d522c28b35fd --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name capture_test --edition=2021 sererr/tests/capture_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6616cfb7ce766ce3 -C extra-filename=-170d30ec5cfc327a --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name conversion_test --edition=2021 sererr-proto/tests/conversion_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=fd17a116ed8a85f0 -C extra-filename=-b708bc714679972a --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib --extern sererr_proto=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr_proto-523f71996e45a5a6.rlib`
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.59s
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/source_provider_test-6752bef0baffa3d9`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr_proto-4ab3d522c28b35fd`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/conversion_test-b708bc714679972a`
+
+*** result: Success
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --verbose --package=sererr@0.1.0 --package=sererr-proto@0.1.0
+       Fresh memchr v2.8.0
+       Fresh gimli v0.32.3
+       Fresh adler2 v2.0.1
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh unicode-ident v1.0.24
+       Fresh either v1.15.0
+       Fresh bytes v1.11.1
+       Fresh object v0.37.3
+       Fresh addr2line v0.25.1
+       Fresh miniz_oxide v0.8.9
+       Fresh libc v0.2.186
+       Fresh itertools v0.14.0
+       Fresh backtrace v0.3.76
+       Fresh proc-macro2 v1.0.106
+       Fresh anyhow v1.0.102
+       Fresh quote v1.0.45
+       Fresh syn v2.0.117
+       Fresh sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+       Fresh prost-derive v0.14.3
+       Fresh prost v0.14.3
+       Fresh sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+
+running 21 tests
+test frame_with_no_file_renders_bare ... ok
+test frame_with_file_but_no_line_renders_without_colon ... ok
+test frame_with_file_and_line_renders_with_parens_and_colon ... ok
+test frame_with_no_function_renders_unknown ... ok
+test is_app_frame_classifies_runtime_libs_as_not_in_app ... ok
+test is_app_frame_classifies_stdlib_as_not_in_app ... ok
+test is_app_frame_classifies_user_code_as_in_app ... ok
+test to_debug_info_handles_empty_chain ... ok
+test captured_frames_have_file ... ok
+test captured_frames_have_line ... ok
+test single_error_produces_one_entry ... ok
+test captured_frames_mark_user_code_in_app ... ok
+test empty_release_and_server_are_stored ... ok
+test to_debug_info_outermost_has_no_caused_by_prefix ... ok
+test frames_are_populated_most_recent_first ... ok
+test to_debug_info_single_entry_has_no_caused_by ... ok
+test to_debug_info_flattens_chain ... ok
+test captured_frames_have_function ... ok
+test default_mechanism_is_generic_handled ... ok
+test chain_walks_source_most_causal_first ... ok
+test mechanism_ids_stamped_correctly ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/source_provider_test-6752bef0baffa3d9`
+
+running 5 tests
+test context_clamps_at_file_boundaries ... ok
+test line_zero_is_a_noop ... ok
+test line_past_eof_is_a_noop ... ok
+test missing_file_is_a_noop ... ok
+test populates_context_around_line ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr_proto-4ab3d522c28b35fd`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/conversion_test-b708bc714679972a`
+
+running 6 tests
+test captured_error_without_mechanism_roundtrips_as_none ... ok
+test captured_error_with_nested_messages_roundtrips ... ok
+test debug_info_roundtrips_through_proto ... ok
+test mechanism_roundtrips_with_data_map ... ok
+test stack_frame_roundtrips_through_proto ... ok
+test default_stack_frame_roundtrips ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests sererr
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustdoc --edition=2021 --crate-type lib --color auto --crate-name sererr --test sererr/src/lib.rs --test-run-directory /home/babbitt/workspace/sererr/packages/rust/sererr --forbid=unsafe_code --deny=missing_docs --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C embed-bitcode=no --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' --error-format human`
+
+running 1 test
+test sererr/src/lib.rs - (line 16) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+   Doc-tests sererr_proto
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustdoc --edition=2021 --crate-type lib --color auto --crate-name sererr_proto --test sererr-proto/src/lib.rs --test-run-directory /home/babbitt/workspace/sererr/packages/rust/sererr-proto --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib --extern sererr_proto=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr_proto-523f71996e45a5a6.rlib -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C embed-bitcode=no --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' --error-format human`
+
+running 1 test
+test sererr-proto/src/lib.rs - (line 22) - compile ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+
+*** result: Success

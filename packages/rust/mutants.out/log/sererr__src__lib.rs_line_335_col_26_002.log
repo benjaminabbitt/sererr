@@ -1,0 +1,132 @@
+
+*** sererr/src/lib.rs:335:26: replace > with >= in format_frame_line
+
+*** mutation diff:
+--- sererr/src/lib.rs
++++ replace > with >= in format_frame_line
+@@ -327,17 +327,17 @@
+         stack_entries,
+         detail: detail_parts.join("\n"),
+     }
+ }
+ 
+ fn format_frame_line(frame: &StackFrame) -> String {
+     let location = if frame.file.is_empty() {
+         String::new()
+-    } else if frame.line > 0 {
++    } else if frame.line >= /* ~ changed by cargo-mutants ~ */ 0 {
+         format!(" ({}:{})", frame.file, frame.line)
+     } else {
+         format!(" ({})", frame.file)
+     };
+     let function = if frame.function.is_empty() {
+         "<unknown>"
+     } else {
+         &frame.function
+
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --verbose --package=sererr@0.1.0
+       Fresh gimli v0.32.3
+       Fresh memchr v2.8.0
+       Fresh adler2 v2.0.1
+       Fresh miniz_oxide v0.8.9
+       Fresh object v0.37.3
+       Fresh addr2line v0.25.1
+       Fresh libc v0.2.186
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh backtrace v0.3.76
+       Dirty sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr): the file `sererr/src/lib.rs` has changed (1778980623.157218451s, 1s after last build at 1778980622.769220868s)
+   Compiling sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr --edition=2021 sererr/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=7aa22a09ef871695 -C extra-filename=-fe31dc75abc0f4c4 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr --edition=2021 sererr/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=2ae02d1a6358fea8 -C extra-filename=-e22013d4cff5d55c --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rmeta`
+warning: comparison is useless due to type limits
+   --> sererr/src/lib.rs:335:15
+    |
+335 |     } else if frame.line >= /* ~ changed by cargo-mutants ~ */ 0 {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_comparisons)]` on by default
+
+warning: `sererr` (lib) generated 1 warning (1 duplicate)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name source_provider_test --edition=2021 sererr/tests/source_provider_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=99895e4ef7afd86d -C extra-filename=-6752bef0baffa3d9 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name capture_test --edition=2021 sererr/tests/capture_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6616cfb7ce766ce3 -C extra-filename=-170d30ec5cfc327a --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+warning: `sererr` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.23s
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/source_provider_test-6752bef0baffa3d9`
+
+*** result: Success
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --verbose --package=sererr@0.1.0
+       Fresh gimli v0.32.3
+       Fresh adler2 v2.0.1
+       Fresh memchr v2.8.0
+       Fresh object v0.37.3
+       Fresh miniz_oxide v0.8.9
+       Fresh addr2line v0.25.1
+       Fresh libc v0.2.186
+       Fresh rustc-demangle v0.1.27
+       Fresh cfg-if v1.0.4
+       Fresh backtrace v0.3.76
+warning: comparison is useless due to type limits
+   --> sererr/src/lib.rs:335:15
+    |
+335 |     } else if frame.line >= /* ~ changed by cargo-mutants ~ */ 0 {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_comparisons)]` on by default
+
+warning: `sererr` (lib) generated 1 warning
+warning: `sererr` (lib test) generated 1 warning (1 duplicate)
+       Fresh sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+
+running 21 tests
+test frame_with_file_and_line_renders_with_parens_and_colon ... ok
+test frame_with_file_but_no_line_renders_without_colon ... FAILED
+test frame_with_no_function_renders_unknown ... ok
+test frame_with_no_file_renders_bare ... ok
+test is_app_frame_classifies_runtime_libs_as_not_in_app ... ok
+test is_app_frame_classifies_stdlib_as_not_in_app ... ok
+test is_app_frame_classifies_user_code_as_in_app ... ok
+test to_debug_info_handles_empty_chain ... ok
+test to_debug_info_flattens_chain ... ok
+test captured_frames_mark_user_code_in_app ... ok
+test empty_release_and_server_are_stored ... ok
+test mechanism_ids_stamped_correctly ... ok
+test captured_frames_have_line ... ok
+test captured_frames_have_function ... ok
+test frames_are_populated_most_recent_first ... ok
+test captured_frames_have_file ... ok
+test to_debug_info_outermost_has_no_caused_by_prefix ... ok
+test default_mechanism_is_generic_handled ... ok
+test to_debug_info_single_entry_has_no_caused_by ... ok
+test chain_walks_source_most_causal_first ... ok
+test single_error_produces_one_entry ... ok
+
+failures:
+
+---- frame_with_file_but_no_line_renders_without_colon stdout ----
+
+thread 'frame_with_file_but_no_line_renders_without_colon' (3601352) panicked at sererr/tests/capture_test.rs:383:5:
+expected '  at fn_b (src/y.rs)' (no line); got ["T: m", "  at fn_b (src/y.rs:0)"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    frame_with_file_but_no_line_renders_without_colon
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+error: test failed, to rerun pass `-p sererr --test capture_test`
+
+*** result: Failure(101)

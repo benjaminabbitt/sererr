@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace + with * in populate_source_context
+@@ -164,17 +164,17 @@
+     let idx = (frame.line as usize).saturating_sub(1);
+     if idx >= lines.len() {
+         return;
+     }
+     frame.context_line = lines[idx].to_string();
+     let start = idx.saturating_sub(surrounding);
+     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();
+     let end = (idx + 1 + surrounding).min(lines.len());
+-    frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();
++    frame.post_context = lines[idx * /* ~ changed by cargo-mutants ~ */ 1..end].iter().map(|s| s.to_string()).collect();
+ }
+ 
+ /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).
+ ///
+ /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use
+ /// [`to_debug_info`] to render a capture into this shape. The
+ /// `sererr-proto` crate provides a `From<DebugInfo> for
+ /// google_rpc::DebugInfo` conversion when you need the actual proto

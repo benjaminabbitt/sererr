@@ -1,0 +1,44 @@
+# Per-toolchain caches mounted from /workspace/.cache in containers.
+.cache/
+
+# Collected build artifacts produced by `just package-all`.
+dist/
+
+# Rust
+**/target/
+**/Cargo.lock.* # local lock backups
+# Cargo.lock IS tracked for binaries (libraries vary; sererr is a library
+# so we'd usually exclude, but committing makes CI builds reproducible).
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/dist/
+**/build/
+**/.pytest_cache/
+**/.mutmut-cache/
+**/*.egg-info/
+**/.venv/
+
+# Go
+**/vendor/
+
+# Java / Kotlin
+**/.gradle/
+**/.idea/
+**/out/
+
+# C#
+**/bin/
+**/obj/
+
+# Node / TypeScript
+**/node_modules/
+
+# Web site
+src/web/dist/
+src/web/.astro/
+
+# Editor / OS
+.DS_Store
+Thumbs.db

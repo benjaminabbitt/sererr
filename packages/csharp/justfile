@@ -1,0 +1,35 @@
+# sererr C# package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    dotnet build --configuration Release
+
+# Build the NuGet .nupkg; copy to {{TOP}}/dist/csharp/.
+package:
+    dotnet pack --configuration Release
+    mkdir -p {{TOP}}/dist/csharp
+    cp -v bin/Release/*.nupkg {{TOP}}/dist/csharp/
+
+test:
+    dotnet test
+
+# Coverage via coverlet.collector (cobertura XML).
+coverage:
+    dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults/
+
+# Stryker.NET native 85% break threshold (configured in stryker-config.json).
+mutants:
+    dotnet stryker
+
+publish version:
+    dotnet pack /p:PackageVersion={{version}} --configuration Release
+    dotnet nuget push bin/Release/Sererr.{{version}}.nupkg \
+        --source https://api.nuget.org/v3/index.json
+
+check: build test

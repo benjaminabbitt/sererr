@@ -1,0 +1,304 @@
+# sererr CI — push/PR gate across all seven language packages.
+#
+# Each job runs:
+#   1. Toolchain setup (with per-language caching)
+#   2. Package tests (TDD unit tests + per-language fixture checks)
+#   3. Cross-language conformance for that language (15 Gherkin scenarios)
+#   4. Build the distributable artifact
+#   5. Upload the artifact for downstream release workflows
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Conformance runners read these from env (mirrors `just conformance` recipe).
+env:
+  SERERR_FEATURES_DIR: ${{ github.workspace }}/tests/conformance/features
+  SERERR_FIXTURES_DIR: ${{ github.workspace }}/tests/conformance/fixtures
+
+jobs:
+  # =====================================================================
+  rust:
+    name: rust (stable + nightly for sererr-flate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/rust
+      - uses: extractions/setup-just@v2
+
+      - name: Stable workspace tests (sererr + sererr-proto)
+        working-directory: packages/rust
+        run: cargo test
+
+      - name: Nightly tests (sererr-flate)
+        working-directory: packages/rust
+        run: cargo +nightly test -p sererr-flate
+
+      - name: Cross-language conformance (rust runner)
+        run: just conformance-one rust
+
+      - name: Coverage
+        run: |
+          rustup component add llvm-tools-preview
+          cargo install --locked cargo-llvm-cov
+          cd packages/rust && cargo llvm-cov --workspace --lcov --output-path lcov.info --ignore-filename-regex 'gen/'
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/rust/lcov.info
+          flags: rust
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Build artifacts
+        run: just package rust
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rust-artifacts
+          path: dist/rust/
+
+  # =====================================================================
+  python:
+    name: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+          cache-dependency-glob: packages/python/uv.lock
+      - uses: extractions/setup-just@v2
+
+      - name: Sync deps
+        working-directory: packages/python
+        run: uv sync --all-extras --dev
+
+      - name: Unit tests + coverage
+        working-directory: packages/python
+        run: uv run pytest --cov --cov-report=lcov:lcov.info --cov-report=term
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/python/lcov.info
+          flags: python
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (python runner)
+        run: just conformance-one python
+
+      - name: Build artifacts
+        run: just package python
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-artifacts
+          path: dist/python/
+
+  # =====================================================================
+  go:
+    name: go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache-dependency-path: |
+            packages/go/go.sum
+            tests/conformance/runners/go/go.sum
+      - uses: extractions/setup-just@v2
+
+      - name: Vet + tests + coverage
+        working-directory: packages/go
+        run: |
+          go vet ./...
+          go test -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/go/coverage.out
+          flags: go
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (go runner)
+        run: just conformance-one go
+
+      - name: Build artifacts
+        run: just package go
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: go-artifacts
+          path: dist/go/
+
+  # =====================================================================
+  java:
+    name: java
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: extractions/setup-just@v2
+
+      - name: Build + test + coverage
+        run: ./gradlew :packages:java:test :packages:java:jacocoTestReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/java/build/reports/jacoco/test/jacocoTestReport.xml
+          flags: java
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (java runner)
+        run: just conformance-one java
+
+      - name: Build artifacts
+        run: just package java
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-artifacts
+          path: dist/java/
+
+  # =====================================================================
+  kotlin:
+    name: kotlin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: extractions/setup-just@v2
+
+      - name: Build + test + coverage
+        run: ./gradlew :packages:kotlin:test :packages:kotlin:jacocoTestReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/kotlin/build/reports/jacoco/test/jacocoTestReport.xml
+          flags: kotlin
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (kotlin runner)
+        run: just conformance-one kotlin
+
+      - name: Build artifacts
+        run: just package kotlin
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kotlin-artifacts
+          path: dist/kotlin/
+
+  # =====================================================================
+  csharp:
+    name: csharp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+      - uses: extractions/setup-just@v2
+
+      - name: Restore + build + test + coverage
+        working-directory: packages/csharp
+        run: |
+          dotnet restore
+          dotnet build --configuration Release --no-restore
+          dotnet test --configuration Release --no-build \
+            --collect:"XPlat Code Coverage" --results-directory TestResults/
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          directory: packages/csharp/TestResults/
+          flags: csharp
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (csharp runner)
+        run: just conformance-one csharp
+
+      - name: Build artifacts
+        run: just package csharp
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: csharp-artifacts
+          path: dist/csharp/
+
+  # =====================================================================
+  typescript:
+    name: typescript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            packages/typescript/package-lock.json
+            tests/conformance/runners/typescript/package-lock.json
+      - uses: extractions/setup-just@v2
+
+      - name: Install + build + test + coverage
+        working-directory: packages/typescript
+        run: |
+          npm ci
+          npm run build
+          npm run coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: packages/typescript/coverage/lcov.info
+          flags: typescript
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Cross-language conformance (typescript runner)
+        run: just conformance-one typescript
+
+      - name: Build artifacts
+        run: just package typescript
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: typescript-artifacts
+          path: dist/typescript/
+
+  # =====================================================================
+  # Aggregate status: passes only when every language job passes. Branch
+  # protection should require this single check rather than seven so
+  # rule-changes when languages are added/removed are cheap.
+  ci-all:
+    name: ci (all languages)
+    needs: [rust, python, go, java, kotlin, csharp, typescript]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "all per-language CI jobs passed"

@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ delete field handled from struct ExceptionMechanism expression in capture
+@@ -211,17 +211,17 @@
+     let mut leaf_type = type_name.to_string();
+     while let Some(e) = current {
+         chain.push(CapturedError {
+             r#type: std::mem::take(&mut leaf_type),
+             message: format!("{e}"),
+             frames: frames.clone(),
+             mechanism: Some(ExceptionMechanism {
+                 r#type: "generic".to_string(),
+-                handled: true,
++                 /* ~ changed by cargo-mutants ~ */
+                 ..Default::default()
+             }),
+             release: release.to_string(),
+             server_name: server_name.to_string(),
+         });
+         current = e.source();
+     }
+     chain.reverse();

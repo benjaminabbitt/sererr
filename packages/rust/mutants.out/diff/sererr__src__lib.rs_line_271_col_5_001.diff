@@ -1,0 +1,37 @@
+--- sererr/src/lib.rs
++++ replace is_app_frame -> bool with false
+@@ -263,33 +263,17 @@
+         }
+     }
+     out
+ }
+ 
+ /// Default `in_app` heuristic. Producers with a better signal should
+ /// not rely on this.
+ pub fn is_app_frame(function: &str) -> bool {
+-    const NON_APP_PREFIXES: &[&str] = &[
+-        "std::",
+-        "core::",
+-        "alloc::",
+-        "<core::",
+-        "<std::",
+-        "<alloc::",
+-        "<unknown>",
+-        "rustc_",
+-        "__rust_",
+-        "_start",
+-        "main",
+-        "tokio::",
+-        "backtrace::",
+-        "sererr::",
+-    ];
+-    !NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))
++    false /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ /// Adapt a sererr capture into the [`DebugInfo`] shape.
+ ///
+ /// `stack_entries` gets one line per frame, formatted as
+ /// `"  at <function> (<file>:<line>)"`, most-recent-call-first within
+ /// each chain entry, separated by `"Caused by: <type>: <message>"`
+ /// lines across the chain.

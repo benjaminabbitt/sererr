@@ -1,0 +1,14 @@
+# Generate Go protobuf types from the sererr proto module.
+#
+# Run via `just proto-gen` (in packages/go/justfile). Output lands
+# under pb/ and is committed — downstream consumers build without
+# needing buf or protoc installed.
+
+version: v2
+inputs:
+  - directory: ../../proto
+plugins:
+  - remote: buf.build/protocolbuffers/go:v1.34.2
+    out: pb
+    opt:
+      - paths=source_relative

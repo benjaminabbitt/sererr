@@ -1,0 +1,138 @@
+# sererr Rust workspace — per-language justfile.
+#
+# The workspace has three crates:
+#   - sererr       (stable, core plain types + capture + ToDebugInfo)
+#   - sererr-proto (stable, prost-generated types + From conversions)
+#   - sererr-flate (nightly, compressed source-embed)
+#
+# Stable cargo handles the default-members (sererr + sererr-proto).
+# Flate uses its own rust-toolchain.toml pinning the nightly channel.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+# Build the default workspace members (stable crates only).
+build:
+    cargo build --release
+
+# Build the nightly crate (sererr-flate). Uses the rust-toolchain.toml
+# in sererr-flate/ to select nightly automatically.
+build-flate:
+    cargo build --release -p sererr-flate
+
+# Build every workspace member, including the nightly crate.
+build-all: build build-flate
+
+# Test the stable workspace members.
+test:
+    cargo test
+
+# Test the nightly crate (sererr-flate).
+test-flate:
+    cargo test -p sererr-flate
+
+# Test every workspace member.
+test-all: test test-flate
+
+# Code coverage for the stable workspace members. Writes lcov.info
+# (for CI / Codecov) and an HTML report under target/llvm-cov/.
+# Generated proto bindings under src/gen/ are excluded — the human-
+# written code is what we're measuring.
+coverage:
+    cargo llvm-cov --workspace --lcov --output-path lcov.info \
+        --ignore-filename-regex 'gen/'
+    cargo llvm-cov --workspace --html --output-dir target/llvm-cov \
+        --ignore-filename-regex 'gen/'
+    cargo llvm-cov report --summary-only --ignore-filename-regex 'gen/'
+
+# Run mutation tests against the stable crates with an 85% kill-rate
+# gate. cargo-mutants doesn't have a native threshold flag, so we
+# post-process the per-outcome file counts.
+mutants:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cargo mutants --in-place --timeout 120 --build-timeout 240 || true
+    caught=$(wc -l < mutants.out/caught.txt 2>/dev/null || echo 0)
+    missed=$(wc -l < mutants.out/missed.txt 2>/dev/null || echo 0)
+    tmo=$(wc -l < mutants.out/timeout.txt 2>/dev/null || echo 0)
+    total=$(( caught + missed + tmo ))
+    if [ $total -eq 0 ]; then
+        echo "no mutants produced — check cargo-mutants output" >&2
+        exit 1
+    fi
+    killed=$(( caught + tmo ))
+    pct=$(( killed * 100 / total ))
+    printf 'rust mutation kill rate: %d / %d = %d%%\n' "$killed" "$total" "$pct"
+    if [ "$pct" -lt 85 ]; then
+        echo "FAIL: below 85%% gate" >&2
+        exit 1
+    fi
+    echo "PASS: at or above 85%% gate"
+
+# Regenerate proto bindings via `buf generate`. Output is committed
+# under `sererr-proto/src/gen/`; downstream cargo builds do NOT
+# require buf or protoc — only crate authors regenerating after a
+# schema change. The container path here matches the host justfile's
+# `_in` pattern (HOME redirect, no nested container).
+proto-gen:
+    cd {{TOP}}/packages/rust/sererr-proto && \
+        HOME=/tmp buf generate
+
+# Build distributable .crate tarballs for all three workspace crates
+# and copy them to {{TOP}}/dist/rust/. `--no-verify` skips the
+# crates.io-resolvable check (sererr-proto / sererr-flate path-depend
+# on sererr, which isn't published yet); the resulting .crate files
+# are valid for inspection or out-of-band upload.
+package:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    # `sererr` packages cleanly — no inter-workspace deps. The other
+    # two crates have `sererr = { version = "0.1", path = "sererr" }`
+    # which cargo can only fully resolve once `sererr` is published.
+    # Locally, we package what we can; orchestrators document the
+    # publishing chain (sererr → sererr-proto → sererr-flate).
+    cargo package -p sererr --no-verify --allow-dirty --offline
+    mkdir -p {{TOP}}/dist/rust
+    cp -v target/package/sererr-*.crate {{TOP}}/dist/rust/
+    # sererr-proto and sererr-flate require sererr to be on crates.io
+    # before cargo can prepare their packages. Drop a manifest so the
+    # orchestrator's dist/ listing tells the same story.
+    cat > {{TOP}}/dist/rust/PUBLISH-ORDER <<'EOF'
+    1. cargo publish -p sererr
+    2. cargo publish -p sererr-proto    (after sererr is on crates.io)
+    3. cargo +nightly publish -p sererr-flate
+    Local .crate files for proto + flate are produced as a side-effect
+    of step 2 and 3; package them locally only after step 1.
+    EOF
+
+# Publish each crate to crates.io in dependency order:
+#   1. sererr (no dependencies on other workspace crates)
+#   2. sererr-proto (depends on sererr)
+#   3. sererr-flate (depends on sererr, requires nightly)
+# Each crate's Cargo.toml version must match {{version}}.
+publish version:
+    cargo publish -p sererr
+    cargo publish -p sererr-proto
+    cargo +nightly publish -p sererr-flate
+
+# Lint (stable crates).
+lint:
+    cargo clippy --workspace --exclude sererr-flate --all-targets -- -D warnings
+
+# Lint (nightly crate).
+lint-flate:
+    cargo clippy -p sererr-flate --all-targets -- -D warnings
+
+# Format the whole workspace (stable rustfmt).
+fmt:
+    cargo fmt --all
+
+fmt-check:
+    cargo fmt --all -- --check
+
+# Combined check (stable members).
+check: fmt-check lint test

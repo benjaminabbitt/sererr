@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ delete field line from struct StackFrame expression in capture_frames
+@@ -251,17 +251,17 @@
+                 .map(|p| p.display().to_string())
+                 .unwrap_or_default();
+             let line = symbol.lineno().unwrap_or(0);
+             let in_app = is_app_frame(&function);
+ 
+             out.push(StackFrame {
+                 function,
+                 file,
+-                line,
++                 /* ~ changed by cargo-mutants ~ */
+                 in_app,
+                 ..Default::default()
+             });
+         }
+     }
+     out
+ }
+ 

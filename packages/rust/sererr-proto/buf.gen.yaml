@@ -1,0 +1,24 @@
+# Generate Rust prost types from the sererr proto module.
+#
+# Run via `just proto-gen` (in packages/rust/sererr-proto/justfile).
+# Output lands under src/gen/ and is committed — downstream consumers
+# build without needing buf or protoc installed.
+
+version: v2
+inputs:
+  - directory: ../../../proto
+plugins:
+  - remote: buf.build/community/neoeinstein-prost:v0.4.0
+    out: src/gen
+    opt:
+      # Map fields use BTreeMap for deterministic byte encoding
+      # (cross-language conformance byte-compares require this).
+      - btree_map=.
+      # Emit the prost::Name trait so reflection / type_url lookup
+      # works for consumers that need it (the angzarr status console
+      # uses this).
+      - enable_type_names=true
+  - remote: buf.build/community/neoeinstein-prost-crate:v0.4.1
+    out: src/gen
+    opt:
+      - no_features

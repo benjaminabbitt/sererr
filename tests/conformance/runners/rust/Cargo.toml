@@ -1,0 +1,23 @@
+[package]
+name = "sererr-conformance-rust"
+version = "0.1.0"
+edition = "2021"
+publish = false  # Test runner; not published to crates.io.
+
+description = "Rust conformance runner for the sererr Cucumber corpus."
+
+[dependencies]
+sererr = { path = "../../../../packages/rust/sererr" }
+sererr-proto = { path = "../../../../packages/rust/sererr-proto" }
+
+prost = "0.14"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+cucumber = "0.21"
+tokio = { version = "1", features = ["macros", "rt", "rt-multi-thread"] }
+
+[[test]]
+name = "conformance"
+harness = false

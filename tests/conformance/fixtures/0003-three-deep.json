@@ -1,0 +1,19 @@
+{
+  "captured_error": {
+    "type": "OuterError",
+    "message": "outer",
+    "frames": [
+      {"function": "outer_fn", "file": "src/outer.rs", "line": 10, "in_app": true},
+      {"function": "middle_fn", "file": "src/middle.rs", "line": 20, "in_app": true},
+      {"function": "inner_fn", "file": "src/inner.rs", "line": 30, "in_app": true}
+    ],
+    "mechanism": {
+      "type": "chained",
+      "handled": true,
+      "exception_id": 2,
+      "parent_id": 1
+    },
+    "release": "v2.4.1",
+    "server_name": "saga-orders-0"
+  }
+}

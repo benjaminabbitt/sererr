@@ -1,0 +1,154 @@
+
+*** sererr-proto/src/lib.rs:117:9: replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()
+
+*** mutation diff:
+--- sererr-proto/src/lib.rs
++++ replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()
+@@ -109,24 +109,17 @@
+             is_exception_group: m.is_exception_group,
+             data: m.data,
+         }
+     }
+ }
+ 
+ impl From<sererr::CapturedError> for ProtoCapturedError {
+     fn from(e: sererr::CapturedError) -> Self {
+-        ProtoCapturedError {
+-            r#type: e.r#type,
+-            message: e.message,
+-            frames: e.frames.into_iter().map(Into::into).collect(),
+-            mechanism: e.mechanism.map(Into::into),
+-            release: e.release,
+-            server_name: e.server_name,
+-        }
++        Default::default() /* ~ changed by cargo-mutants ~ */
+     }
+ }
+ 
+ impl From<sererr::DebugInfo> for ProtoDebugInfo {
+     fn from(di: sererr::DebugInfo) -> Self {
+         ProtoDebugInfo {
+             stack_entries: di.stack_entries,
+             detail: di.detail,
+
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --verbose --package=sererr-proto@0.1.0
+       Fresh unicode-ident v1.0.24
+       Fresh proc-macro2 v1.0.106
+       Fresh quote v1.0.45
+       Fresh gimli v0.32.3
+       Fresh either v1.15.0
+       Fresh adler2 v2.0.1
+       Fresh memchr v2.8.0
+       Fresh object v0.37.3
+       Fresh miniz_oxide v0.8.9
+       Fresh itertools v0.14.0
+       Fresh addr2line v0.25.1
+       Fresh syn v2.0.117
+       Fresh anyhow v1.0.102
+       Fresh libc v0.2.186
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh prost-derive v0.14.3
+       Fresh bytes v1.11.1
+       Fresh backtrace v0.3.76
+       Fresh prost v0.14.3
+       Fresh sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+       Dirty sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto): the file `sererr-proto/src/lib.rs` has changed (1778980624.317211227s, 275998281ns after last build at 1778980624.041212946s)
+   Compiling sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr_proto --edition=2021 sererr-proto/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=73955f869661a234 -C extra-filename=-4ab3d522c28b35fd --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr_proto --edition=2021 sererr-proto/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=acb09726e80c6705 -C extra-filename=-523f71996e45a5a6 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rmeta --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rmeta`
+warning: unused variable: `e`
+   --> sererr-proto/src/lib.rs:116:13
+    |
+116 |     fn from(e: sererr::CapturedError) -> Self {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sererr-proto` (lib) generated 1 warning (1 duplicate)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name conversion_test --edition=2021 sererr-proto/tests/conversion_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=fd17a116ed8a85f0 -C extra-filename=-b708bc714679972a --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern prost=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libprost-1a7fb8de8bcd65d7.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib --extern sererr_proto=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr_proto-523f71996e45a5a6.rlib`
+warning: `sererr-proto` (lib test) generated 1 warning (run `cargo fix --lib -p sererr-proto --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.28s
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr_proto-4ab3d522c28b35fd`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/conversion_test-b708bc714679972a`
+
+*** result: Success
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --verbose --package=sererr-proto@0.1.0
+       Fresh unicode-ident v1.0.24
+       Fresh proc-macro2 v1.0.106
+       Fresh quote v1.0.45
+       Fresh gimli v0.32.3
+       Fresh memchr v2.8.0
+       Fresh adler2 v2.0.1
+       Fresh either v1.15.0
+       Fresh itertools v0.14.0
+       Fresh miniz_oxide v0.8.9
+       Fresh object v0.37.3
+       Fresh addr2line v0.25.1
+       Fresh syn v2.0.117
+       Fresh libc v0.2.186
+       Fresh anyhow v1.0.102
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh bytes v1.11.1
+       Fresh prost-derive v0.14.3
+       Fresh backtrace v0.3.76
+       Fresh prost v0.14.3
+       Fresh sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+warning: unused variable: `e`
+   --> sererr-proto/src/lib.rs:116:13
+    |
+116 |     fn from(e: sererr::CapturedError) -> Self {
+    |             ^ help: if this is intentional, prefix it with an underscore: `_e`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sererr-proto` (lib) generated 1 warning (run `cargo fix --lib -p sererr-proto` to apply 1 suggestion)
+warning: `sererr-proto` (lib test) generated 1 warning (1 duplicate)
+       Fresh sererr-proto v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr-proto)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr_proto-4ab3d522c28b35fd`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/conversion_test-b708bc714679972a`
+
+running 6 tests
+test captured_error_without_mechanism_roundtrips_as_none ... FAILED
+test default_stack_frame_roundtrips ... ok
+test debug_info_roundtrips_through_proto ... ok
+test captured_error_with_nested_messages_roundtrips ... FAILED
+test mechanism_roundtrips_with_data_map ... ok
+test stack_frame_roundtrips_through_proto ... ok
+
+failures:
+
+---- captured_error_without_mechanism_roundtrips_as_none stdout ----
+
+thread 'captured_error_without_mechanism_roundtrips_as_none' (3602185) panicked at sererr-proto/tests/conversion_test.rs:144:5:
+assertion `left == right` failed
+  left: CapturedError { type: "", message: "", frames: [], mechanism: None, release: "", server_name: "" }
+ right: CapturedError { type: "MyError", message: "oops", frames: [], mechanism: None, release: "", server_name: "" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- captured_error_with_nested_messages_roundtrips stdout ----
+
+thread 'captured_error_with_nested_messages_roundtrips' (3602184) panicked at sererr-proto/tests/conversion_test.rs:121:5:
+assertion `left == right` failed
+  left: CapturedError { type: "", message: "", frames: [], mechanism: None, release: "", server_name: "" }
+ right: CapturedError { type: "MyError", message: "oops", frames: [StackFrame { function: "doit", module: "", package: "", file: "src/x.rs", abs_path: "", line: 12, context_line: "", pre_context: [], post_context: [], source_link: "", in_app: true }], mechanism: Some(ExceptionMechanism { type: "generic", description: "", handled: true, synthetic: false, help_link: "", source: "", exception_id: 0, parent_id: 0, is_exception_group: false, data: {} }), release: "v1.0.0", server_name: "host-1" }
+
+
+failures:
+    captured_error_with_nested_messages_roundtrips
+    captured_error_without_mechanism_roundtrips_as_none
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sererr-proto --test conversion_test`
+
+*** result: Failure(101)

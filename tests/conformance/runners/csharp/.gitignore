@@ -1,0 +1,10 @@
+# Reqnroll's MSBuild generator writes a `.feature.cs` codebehind file
+# next to every `.feature` file it processes. We copy the shared
+# conformance corpus into Features/ at build time (see csproj
+# CopySharedFeatures target); both the .feature copies and the
+# generated codebehind are ephemeral build artifacts.
+Features/
+
+# Standard .NET build outputs
+bin/
+obj/

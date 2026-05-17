@@ -1,0 +1,55 @@
+# sererr — Rust toolchain container.
+# Used by the host `justfile` via the just-in-just overlay pattern:
+# host `justfile` mounts `justfile.container` into the container as
+# /workspace/justfile and shells out to `just <task>` inside.
+
+FROM docker.io/library/rust:1.95-slim-bookworm
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Tooling: protoc for proto compilation, just for the inner justfile,
+# build-essential for native deps (prost-build, openssl-sys, etc.),
+# pkg-config for system libraries, git for crates.io git deps,
+# curl + ca-certificates for downloads.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        curl \
+        git \
+        pkg-config \
+        protobuf-compiler \
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# `just` — install from the prebuilt release tarball.
+ARG JUST_VERSION=1.36.0
+RUN curl -fsSL "https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+        | tar -xz -C /usr/local/bin just
+
+# `buf` — proto module + codegen driver. Used by `just proto-gen` in
+# the Rust workspace to regenerate sererr-proto's committed Rust
+# bindings via `protoc-gen-prost` (a buf remote plugin).
+ARG BUF_VERSION=1.45.0
+RUN curl -fsSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Linux-x86_64" \
+        -o /usr/local/bin/buf && chmod +x /usr/local/bin/buf
+
+# Install nightly Rust alongside the default stable toolchain.
+# `sererr-flate` requires nightly for `proc_macro_span` (via
+# include-flate-codegen). Other workspace crates build on stable.
+# rust-toolchain.toml inside sererr-flate pins the channel per-crate;
+# rustup auto-selects when cargo runs inside that directory.
+RUN rustup toolchain install nightly --profile minimal \
+        --component rustfmt --component clippy
+
+# Cargo extensions used in CI / development.
+# cargo-mutants: mutation testing.
+# cargo-llvm-cov: code coverage (uses LLVM source-based instrumentation).
+RUN cargo install --locked cargo-mutants cargo-llvm-cov
+
+# cargo-llvm-cov needs `llvm-tools-preview` (LLVM source-based coverage
+# instrumentation). Install it for both stable + nightly toolchains so
+# coverage works regardless of which crate is being measured.
+RUN rustup component add llvm-tools-preview --toolchain stable && \
+    rustup component add llvm-tools-preview --toolchain nightly
+
+WORKDIR /workspace

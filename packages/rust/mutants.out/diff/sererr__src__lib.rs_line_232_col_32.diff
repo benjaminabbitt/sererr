@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace == with != in capture
+@@ -224,17 +224,17 @@
+         });
+         current = e.source();
+     }
+     chain.reverse();
+ 
+     for (i, entry) in chain.iter_mut().enumerate() {
+         if let Some(m) = entry.mechanism.as_mut() {
+             m.exception_id = i as u32;
+-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };
++            m.parent_id = if i != /* ~ changed by cargo-mutants ~ */ 0 { 0 } else { (i - 1) as u32 };
+         }
+     }
+     chain
+ }
+ 
+ /// Capture frames from the calling stack.
+ ///
+ /// Frames are returned most-recent-call-first. Runtime / framework

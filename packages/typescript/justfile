@@ -1,0 +1,50 @@
+# sererr TypeScript package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    npm ci
+    npm run build
+
+# Pack the npm tarball (`npm pack` writes <name>-<version>.tgz to cwd);
+# move to {{TOP}}/dist/typescript/.
+package:
+    npm ci
+    npm run build
+    npm pack
+    mkdir -p {{TOP}}/dist/typescript
+    mv -v *.tgz {{TOP}}/dist/typescript/
+
+test:
+    npm ci
+    npm test
+
+# Coverage via vitest's V8 provider (text + HTML + lcov).
+coverage:
+    npm ci
+    npm run coverage
+
+# Stryker.JS native 85% break threshold (configured in stryker.config.mjs).
+mutants:
+    npm ci
+    npm run mutants
+
+proto-gen:
+    npm run proto:gen
+
+publish version:
+    npm version {{version}}
+    npm publish
+
+lint:
+    npm run lint
+
+fmt:
+    npm run fmt
+
+check: lint test

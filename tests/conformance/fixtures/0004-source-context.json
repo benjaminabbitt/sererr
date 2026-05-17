@@ -1,0 +1,25 @@
+{
+  "captured_error": {
+    "type": "FailingFn",
+    "message": "saw bad value",
+    "frames": [
+      {
+        "function": "handler",
+        "file": "src/handler.rs",
+        "abs_path": "/build/src/handler.rs",
+        "line": 42,
+        "context_line": "    do_it(arg)?;",
+        "pre_context": ["fn handler() {", "    let arg = read();"],
+        "post_context": ["    Ok(())", "}"],
+        "source_link": "https://example.com/src/handler.rs#L42",
+        "in_app": true
+      }
+    ],
+    "mechanism": {
+      "type": "generic",
+      "handled": true
+    },
+    "release": "abc1234",
+    "server_name": "pod-7"
+  }
+}

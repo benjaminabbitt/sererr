@@ -1,0 +1,16 @@
+{
+  "stryker-config": {
+    "project": "Sererr.csproj",
+    "test-projects": ["tests/SererrTests.csproj"],
+    "thresholds": {
+      "high": 90,
+      "low": 85,
+      "break": 85
+    },
+    "reporters": ["progress", "html", "json"],
+    "mutate": [
+      "src/**/*.cs",
+      "!Generated/**/*.cs"
+    ]
+  }
+}

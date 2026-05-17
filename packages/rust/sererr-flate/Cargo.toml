@@ -1,0 +1,25 @@
+[package]
+name = "sererr-flate"
+description = "Compressed source-bundle support for sererr. Embed your project's source with gzip-compression at build time; populate `context_line` / `pre_context` / `post_context` on captures at zero runtime cost. Requires nightly Rust."
+documentation = "https://docs.rs/sererr-flate"
+readme = "README.md"
+
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+sererr = { workspace = true }
+# `include-flate` feature compresses each embedded file with miniz_oxide
+# at compile time, ~5-10x size reduction. Requires nightly Rust:
+# include-flate-codegen depends on the unstable proc_macro_span API
+# (rust-lang/rust#54725).
+rust-embed = { version = "8", features = ["include-flate", "include-exclude"] }
+
+[badges]
+maintenance = { status = "experimental" }

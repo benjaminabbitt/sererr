@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ delete ! in is_app_frame
+@@ -279,17 +279,17 @@
+         "rustc_",
+         "__rust_",
+         "_start",
+         "main",
+         "tokio::",
+         "backtrace::",
+         "sererr::",
+     ];
+-    !NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))
++     /* ~ changed by cargo-mutants ~ */NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))
+ }
+ 
+ /// Adapt a sererr capture into the [`DebugInfo`] shape.
+ ///
+ /// `stack_entries` gets one line per frame, formatted as
+ /// `"  at <function> (<file>:<line>)"`, most-recent-call-first within
+ /// each chain entry, separated by `"Caused by: <type>: <message>"`
+ /// lines across the chain.

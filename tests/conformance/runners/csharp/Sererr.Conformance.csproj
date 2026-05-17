@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Sererr.Conformance</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Reqnroll.xUnit" Version="2.1.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\packages\csharp\Sererr.csproj" />
+  </ItemGroup>
+
+  <!-- Reqnroll's MSBuild generator auto-globs **\*.feature from the
+       project directory and writes codebehind .cs files alongside.
+       Because Reqnroll's glob evaluates at project-parse time, we
+       can't copy the shared corpus in via an MSBuild target on a clean
+       build. Use `just _copy-features` (invoked by `just build` /
+       `just test`) to populate Features/ before invoking dotnet, or
+       run `dotnet build` twice — the first pass triggers the
+       _CopyShared target below; the second pass picks up the files.
+       The Features/ directory is .gitignored. -->
+  <Target Name="_CopySharedFeatures" BeforeTargets="BeforeUpdateFeatureFilesInProject">
+    <ItemGroup>
+      <_SharedFeatureFiles Include="$(MSBuildThisFileDirectory)..\..\features\*.feature" />
+    </ItemGroup>
+    <MakeDir Directories="$(MSBuildThisFileDirectory)Features" />
+    <Copy SourceFiles="@(_SharedFeatureFiles)"
+          DestinationFolder="$(MSBuildThisFileDirectory)Features"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

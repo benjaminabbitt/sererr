@@ -1,0 +1,33 @@
+# sererr Kotlin package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    cd {{TOP}} && ./gradlew :packages:kotlin:build
+
+# Build the main jar (+ sources / javadoc if configured); copy to
+# {{TOP}}/dist/kotlin/.
+package:
+    cd {{TOP}} && ./gradlew :packages:kotlin:build
+    mkdir -p {{TOP}}/dist/kotlin
+    cp -v {{TOP}}/packages/kotlin/build/libs/*.jar {{TOP}}/dist/kotlin/
+
+test:
+    cd {{TOP}} && ./gradlew :packages:kotlin:test
+
+coverage:
+    cd {{TOP}} && ./gradlew :packages:kotlin:jacocoTestReport
+
+mutants:
+    cd {{TOP}} && ./gradlew :packages:kotlin:pitest
+
+publish version:
+    cd {{TOP}} && ./gradlew :packages:kotlin:publish -Pversion={{version}}
+
+check:
+    cd {{TOP}} && ./gradlew :packages:kotlin:check

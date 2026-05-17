@@ -1,0 +1,25 @@
+{
+  "captured_error": {
+    "type": "SignalError",
+    "message": "segfault",
+    "frames": [],
+    "mechanism": {
+      "type": "signal",
+      "description": "SIGSEGV at native frame",
+      "handled": true,
+      "synthetic": false,
+      "help_link": "https://example.com/help/sigsegv",
+      "source": "panic_hook",
+      "exception_id": 0,
+      "parent_id": 0,
+      "is_exception_group": false,
+      "data": {
+        "signal_name": "SIGSEGV",
+        "signal_number": "11",
+        "errno": "11"
+      }
+    },
+    "release": "v0.9.0",
+    "server_name": "ext-svc-12"
+  }
+}

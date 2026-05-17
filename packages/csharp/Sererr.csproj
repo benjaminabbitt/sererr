@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Sererr</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Package metadata for NuGet publication. -->
+    <PackageId>Sererr</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>sererr contributors</Authors>
+    <Description>Sentry-compat structured stack-trace + error-chain capture.</Description>
+    <PackageProjectUrl>https://sererr.fyi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sererr/sererr</RepositoryUrl>
+    <PackageLicenseExpression>MIT OR BSD-3-Clause</PackageLicenseExpression>
+    <PackageTags>error;stack-trace;sentry;diagnostics</PackageTags>
+
+    <!-- Embed PDBs so stack frames have line numbers in release builds. -->
+    <DebugType>embedded</DebugType>
+    <IncludeSymbols>false</IncludeSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.28.0" />
+    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+  </ItemGroup>
+
+  <!-- Proto-generated bindings are committed under Generated/. Regenerate
+       with `buf generate ../../proto` (see buf.gen.yaml). The .NET SDK
+       picks them up automatically via implicit Compile globs. -->
+
+  <ItemGroup>
+    <!-- tests/ is a sibling project; exclude from the library's
+         implicit Compile glob so only src/ and Generated/ compile in. -->
+    <Compile Remove="tests/**" />
+    <None Remove="tests/**" />
+    <EmbeddedResource Remove="tests/**" />
+    <None Include="buf.gen.yaml" />
+  </ItemGroup>
+
+</Project>

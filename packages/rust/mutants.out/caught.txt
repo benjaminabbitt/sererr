@@ -1,0 +1,41 @@
+sererr/src/lib.rs:157:5: replace populate_source_context with ()
+sererr/src/lib.rs:157:19: replace == with != in populate_source_context
+sererr/src/lib.rs:165:12: replace >= with < in populate_source_context
+sererr/src/lib.rs:171:24: replace + with - in populate_source_context
+sererr/src/lib.rs:171:24: replace + with * in populate_source_context
+sererr/src/lib.rs:171:20: replace + with - in populate_source_context
+sererr/src/lib.rs:171:20: replace + with * in populate_source_context
+sererr/src/lib.rs:172:36: replace + with - in populate_source_context
+sererr/src/lib.rs:172:36: replace + with * in populate_source_context
+sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![]
+sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![Default::default()]
+sererr/src/lib.rs:218:17: delete field r#type from struct ExceptionMechanism expression in capture
+sererr/src/lib.rs:219:17: delete field handled from struct ExceptionMechanism expression in capture
+sererr/src/lib.rs:232:32: replace == with != in capture
+sererr/src/lib.rs:232:53: replace - with + in capture
+sererr/src/lib.rs:232:53: replace - with / in capture
+sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![]
+sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![Default::default()]
+sererr/src/lib.rs:257:17: delete field function from struct StackFrame expression in capture_frames
+sererr/src/lib.rs:258:17: delete field file from struct StackFrame expression in capture_frames
+sererr/src/lib.rs:259:17: delete field line from struct StackFrame expression in capture_frames
+sererr/src/lib.rs:260:17: delete field in_app from struct StackFrame expression in capture_frames
+sererr/src/lib.rs:271:5: replace is_app_frame -> bool with true
+sererr/src/lib.rs:271:5: replace is_app_frame -> bool with false
+sererr/src/lib.rs:287:5: delete ! in is_app_frame
+sererr/src/lib.rs:300:5: replace to_debug_info -> DebugInfo with Default::default()
+sererr/src/lib.rs:309:34: replace == with != in to_debug_info
+sererr/src/lib.rs:315:16: replace == with != in to_debug_info
+sererr/src/lib.rs:333:5: replace format_frame_line -> String with String::new()
+sererr/src/lib.rs:333:5: replace format_frame_line -> String with "xyzzy".into()
+sererr/src/lib.rs:335:26: replace > with == in format_frame_line
+sererr/src/lib.rs:335:26: replace > with < in format_frame_line
+sererr/src/lib.rs:335:26: replace > with >= in format_frame_line
+sererr-proto/src/lib.rs:82:9: replace <impl From<sererr::StackFrame> for ProtoStackFrame>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:100:9: replace <impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:117:9: replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:130:9: replace <impl From<sererr::DebugInfo> for ProtoDebugInfo>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:141:9: replace <impl From<ProtoStackFrame> for sererr::StackFrame>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:159:9: replace <impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:176:9: replace <impl From<ProtoCapturedError> for sererr::CapturedError>::from -> Self with Default::default()
+sererr-proto/src/lib.rs:189:9: replace <impl From<ProtoDebugInfo> for sererr::DebugInfo>::from -> Self with Default::default()

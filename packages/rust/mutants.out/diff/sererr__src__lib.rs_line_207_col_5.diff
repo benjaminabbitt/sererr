@@ -1,0 +1,49 @@
+--- sererr/src/lib.rs
++++ replace capture -> Vec<CapturedError> with vec![]
+@@ -199,45 +199,17 @@
+ /// runtime type of a `&dyn Error` — producers supply it at the catch
+ /// site.
+ pub fn capture(
+     err: &(dyn Error + 'static),
+     type_name: &str,
+     release: &str,
+     server_name: &str,
+ ) -> Vec<CapturedError> {
+-    let frames = capture_frames();
+-
+-    let mut chain: Vec<CapturedError> = Vec::new();
+-    let mut current: Option<&(dyn Error + 'static)> = Some(err);
+-    let mut leaf_type = type_name.to_string();
+-    while let Some(e) = current {
+-        chain.push(CapturedError {
+-            r#type: std::mem::take(&mut leaf_type),
+-            message: format!("{e}"),
+-            frames: frames.clone(),
+-            mechanism: Some(ExceptionMechanism {
+-                r#type: "generic".to_string(),
+-                handled: true,
+-                ..Default::default()
+-            }),
+-            release: release.to_string(),
+-            server_name: server_name.to_string(),
+-        });
+-        current = e.source();
+-    }
+-    chain.reverse();
+-
+-    for (i, entry) in chain.iter_mut().enumerate() {
+-        if let Some(m) = entry.mechanism.as_mut() {
+-            m.exception_id = i as u32;
+-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };
+-        }
+-    }
+-    chain
++    vec![] /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ /// Capture frames from the calling stack.
+ ///
+ /// Frames are returned most-recent-call-first. Runtime / framework
+ /// frames are marked `in_app = false` via a prefix heuristic.
+ pub fn capture_frames() -> Vec<StackFrame> {
+     let bt = backtrace::Backtrace::new();

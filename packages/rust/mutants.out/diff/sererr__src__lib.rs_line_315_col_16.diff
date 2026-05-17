@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace == with != in to_debug_info
+@@ -307,17 +307,17 @@
+     for (idx, entry) in chain.iter().rev().enumerate() {
+         let header = format!("{}: {}", entry.r#type, entry.message);
+         detail_parts.push(if idx == 0 {
+             header.clone()
+         } else {
+             format!("Caused by: {header}")
+         });
+ 
+-        if idx == 0 {
++        if idx != /* ~ changed by cargo-mutants ~ */ 0 {
+             stack_entries.push(header);
+         } else {
+             stack_entries.push(format!("Caused by: {header}"));
+         }
+ 
+         for frame in &entry.frames {
+             stack_entries.push(format_frame_line(frame));
+         }

@@ -1,0 +1,32 @@
+# sererr Java package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    cd {{TOP}} && ./gradlew :packages:java:build
+
+# Build the main jar + sources jar + javadoc jar; copy to {{TOP}}/dist/java/.
+package:
+    cd {{TOP}} && ./gradlew :packages:java:build
+    mkdir -p {{TOP}}/dist/java
+    cp -v {{TOP}}/packages/java/build/libs/*.jar {{TOP}}/dist/java/
+
+test:
+    cd {{TOP}} && ./gradlew :packages:java:test
+
+coverage:
+    cd {{TOP}} && ./gradlew :packages:java:jacocoTestReport
+
+mutants:
+    cd {{TOP}} && ./gradlew :packages:java:pitest
+
+publish version:
+    cd {{TOP}} && ./gradlew :packages:java:publish -Pversion={{version}}
+
+check:
+    cd {{TOP}} && ./gradlew :packages:java:check

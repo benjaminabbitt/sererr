@@ -1,0 +1,32 @@
+--- sererr-proto/src/lib.rs
++++ replace <impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from -> Self with Default::default()
+@@ -92,28 +92,17 @@
+             source_link: f.source_link,
+             in_app: f.in_app,
+         }
+     }
+ }
+ 
+ impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism {
+     fn from(m: sererr::ExceptionMechanism) -> Self {
+-        ProtoExceptionMechanism {
+-            r#type: m.r#type,
+-            description: m.description,
+-            handled: m.handled,
+-            synthetic: m.synthetic,
+-            help_link: m.help_link,
+-            source: m.source,
+-            exception_id: m.exception_id,
+-            parent_id: m.parent_id,
+-            is_exception_group: m.is_exception_group,
+-            data: m.data,
+-        }
++        Default::default() /* ~ changed by cargo-mutants ~ */
+     }
+ }
+ 
+ impl From<sererr::CapturedError> for ProtoCapturedError {
+     fn from(e: sererr::CapturedError) -> Self {
+         ProtoCapturedError {
+             r#type: e.r#type,
+             message: e.message,

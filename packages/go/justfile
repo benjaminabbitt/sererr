@@ -1,0 +1,56 @@
+# sererr Go package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    go build ./...
+
+# Go has no binary artifact — modules publish via git tag at the repo
+# root. The "package" step verifies compilation across all targets and
+# drops a marker file with the module path + intended version into
+# {{TOP}}/dist/go/ for orchestration visibility.
+package:
+    go build ./...
+    go vet ./...
+    mkdir -p {{TOP}}/dist/go
+    printf 'module %s\nversion %s\n' \
+        "$(go list -m)" \
+        "$(sed -n 's/.*version *= *"\([^"]*\)".*/\1/p' {{TOP}}/packages/rust/Cargo.toml | head -1)" \
+        > {{TOP}}/dist/go/MODULE
+
+test:
+    go test ./...
+
+# Coverage (Go built-in). Writes coverage.out + an HTML report.
+coverage:
+    go test -coverprofile=coverage.out -covermode=atomic ./...
+    go tool cover -html=coverage.out -o coverage.html
+    go tool cover -func=coverage.out | tail -1
+
+# Mutation testing with native 85% efficacy threshold. gremlins exits
+# non-zero when below.
+mutants:
+    gremlins unleash --threshold-efficacy 85 ./...
+
+proto-gen:
+    docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp \
+      -v "{{TOP}}:/workspace" -w /workspace/packages/go \
+      bufbuild/buf:latest generate
+
+publish version:
+    # Go modules publish via git tag at the repo root.
+    git tag packages/go/v{{version}}
+    git push origin packages/go/v{{version}}
+
+lint:
+    go vet ./...
+
+fmt:
+    gofmt -w .
+
+check: fmt lint test

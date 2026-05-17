@@ -1,0 +1,21 @@
+[package]
+name = "sererr"
+description = "Sentry-compat structured stack-trace + error-chain capture. Plain Rust types — no proto dependency."
+documentation = "https://docs.rs/sererr"
+readme = "README.md"
+
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+backtrace = { workspace = true }
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"

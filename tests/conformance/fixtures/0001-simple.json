@@ -1,0 +1,23 @@
+{
+  "captured_error": {
+    "type": "MyError",
+    "message": "oops",
+    "frames": [
+      {
+        "function": "f",
+        "module": "mypkg",
+        "file": "src/x.rs",
+        "line": 12,
+        "in_app": true
+      }
+    ],
+    "mechanism": {
+      "type": "generic",
+      "handled": true,
+      "exception_id": 0,
+      "parent_id": 0
+    },
+    "release": "v1.0.0",
+    "server_name": "host-1"
+  }
+}

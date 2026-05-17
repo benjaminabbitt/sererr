@@ -1,0 +1,19 @@
+{
+  "name": "sererr-conformance-typescript",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript runner for the cross-language sererr conformance corpus.",
+  "scripts": {
+    "test": "node --import tsx node_modules/@cucumber/cucumber/bin/cucumber.js"
+  },
+  "dependencies": {
+    "sererr": "file:../../../../packages/typescript"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@types/node": "^22",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5"
+  }
+}

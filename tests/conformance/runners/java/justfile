@@ -1,0 +1,18 @@
+# Java conformance runner — invoked by tests/conformance/run.sh, or
+# directly via `just test`.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+# Run the cucumber suite. Features + fixtures resolved via env vars.
+test:
+    SERERR_FEATURES_DIR={{TOP}}/tests/conformance/features \
+    SERERR_FIXTURES_DIR={{TOP}}/tests/conformance/fixtures \
+    cd {{TOP}} && ./gradlew :tests:conformance:runners:java:test
+
+build:
+    cd {{TOP}} && ./gradlew :tests:conformance:runners:java:testClasses

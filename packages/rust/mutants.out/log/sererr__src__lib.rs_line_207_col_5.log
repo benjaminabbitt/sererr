@@ -1,0 +1,268 @@
+
+*** sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![]
+
+*** mutation diff:
+--- sererr/src/lib.rs
++++ replace capture -> Vec<CapturedError> with vec![]
+@@ -199,45 +199,17 @@
+ /// runtime type of a `&dyn Error` — producers supply it at the catch
+ /// site.
+ pub fn capture(
+     err: &(dyn Error + 'static),
+     type_name: &str,
+     release: &str,
+     server_name: &str,
+ ) -> Vec<CapturedError> {
+-    let frames = capture_frames();
+-
+-    let mut chain: Vec<CapturedError> = Vec::new();
+-    let mut current: Option<&(dyn Error + 'static)> = Some(err);
+-    let mut leaf_type = type_name.to_string();
+-    while let Some(e) = current {
+-        chain.push(CapturedError {
+-            r#type: std::mem::take(&mut leaf_type),
+-            message: format!("{e}"),
+-            frames: frames.clone(),
+-            mechanism: Some(ExceptionMechanism {
+-                r#type: "generic".to_string(),
+-                handled: true,
+-                ..Default::default()
+-            }),
+-            release: release.to_string(),
+-            server_name: server_name.to_string(),
+-        });
+-        current = e.source();
+-    }
+-    chain.reverse();
+-
+-    for (i, entry) in chain.iter_mut().enumerate() {
+-        if let Some(m) = entry.mechanism.as_mut() {
+-            m.exception_id = i as u32;
+-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };
+-        }
+-    }
+-    chain
++    vec![] /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ /// Capture frames from the calling stack.
+ ///
+ /// Frames are returned most-recent-call-first. Runtime / framework
+ /// frames are marked `in_app = false` via a prefix heuristic.
+ pub fn capture_frames() -> Vec<StackFrame> {
+     let bt = backtrace::Backtrace::new();
+
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --verbose --package=sererr@0.1.0
+       Fresh adler2 v2.0.1
+       Fresh gimli v0.32.3
+       Fresh memchr v2.8.0
+       Fresh cfg-if v1.0.4
+       Fresh rustc-demangle v0.1.27
+       Fresh addr2line v0.25.1
+       Fresh object v0.37.3
+       Fresh libc v0.2.186
+       Fresh miniz_oxide v0.8.9
+       Fresh backtrace v0.3.76
+       Dirty sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr): the file `sererr/src/lib.rs` has changed (1778980610.617296760s, 615996142ns after last build at 1778980610.001300618s)
+   Compiling sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr --edition=2021 sererr/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=7aa22a09ef871695 -C extra-filename=-fe31dc75abc0f4c4 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name sererr --edition=2021 sererr/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=2ae02d1a6358fea8 -C extra-filename=-e22013d4cff5d55c --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rmeta`
+warning: unused variable: `err`
+   --> sererr/src/lib.rs:202:5
+    |
+202 |     err: &(dyn Error + 'static),
+    |     ^^^ help: if this is intentional, prefix it with an underscore: `_err`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `type_name`
+   --> sererr/src/lib.rs:203:5
+    |
+203 |     type_name: &str,
+    |     ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_type_name`
+
+warning: unused variable: `release`
+   --> sererr/src/lib.rs:204:5
+    |
+204 |     release: &str,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_release`
+
+warning: unused variable: `server_name`
+   --> sererr/src/lib.rs:205:5
+    |
+205 |     server_name: &str,
+    |     ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_server_name`
+
+warning: `sererr` (lib test) generated 4 warnings (run `cargo fix --lib -p sererr --tests` to apply 4 suggestions)
+warning: `sererr` (lib) generated 4 warnings (4 duplicates)
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name source_provider_test --edition=2021 sererr/tests/source_provider_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=99895e4ef7afd86d -C extra-filename=-6752bef0baffa3d9 --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+     Running `/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --crate-name capture_test --edition=2021 sererr/tests/capture_test.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --forbid=unsafe_code --deny=missing_docs --test --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6616cfb7ce766ce3 -C extra-filename=-170d30ec5cfc327a --out-dir /home/babbitt/workspace/sererr/packages/rust/target/debug/deps -C incremental=/home/babbitt/workspace/sererr/packages/rust/target/debug/incremental -L dependency=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps --extern backtrace=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libbacktrace-a681e93df78b2584.rlib --extern sererr=/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/libsererr-e22013d4cff5d55c.rlib`
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.68s
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+  Executable `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/source_provider_test-6752bef0baffa3d9`
+
+*** result: Success
+
+*** /home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --verbose --package=sererr@0.1.0
+       Fresh gimli v0.32.3
+       Fresh adler2 v2.0.1
+       Fresh memchr v2.8.0
+       Fresh rustc-demangle v0.1.27
+       Fresh cfg-if v1.0.4
+       Fresh miniz_oxide v0.8.9
+       Fresh libc v0.2.186
+       Fresh object v0.37.3
+       Fresh addr2line v0.25.1
+       Fresh backtrace v0.3.76
+warning: unused variable: `err`
+   --> sererr/src/lib.rs:202:5
+    |
+202 |     err: &(dyn Error + 'static),
+    |     ^^^ help: if this is intentional, prefix it with an underscore: `_err`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `type_name`
+   --> sererr/src/lib.rs:203:5
+    |
+203 |     type_name: &str,
+    |     ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_type_name`
+
+warning: unused variable: `release`
+   --> sererr/src/lib.rs:204:5
+    |
+204 |     release: &str,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_release`
+
+warning: unused variable: `server_name`
+   --> sererr/src/lib.rs:205:5
+    |
+205 |     server_name: &str,
+    |     ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_server_name`
+
+warning: `sererr` (lib) generated 4 warnings (run `cargo fix --lib -p sererr` to apply 4 suggestions)
+warning: `sererr` (lib test) generated 4 warnings (4 duplicates)
+       Fresh sererr v0.1.0 (/home/babbitt/workspace/sererr/packages/rust/sererr)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/sererr-fe31dc75abc0f4c4`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running `/home/babbitt/workspace/sererr/packages/rust/target/debug/deps/capture_test-170d30ec5cfc327a`
+
+running 21 tests
+test captured_frames_have_file ... FAILED
+test captured_frames_have_function ... FAILED
+test captured_frames_have_line ... FAILED
+test chain_walks_source_most_causal_first ... FAILED
+test captured_frames_mark_user_code_in_app ... FAILED
+test default_mechanism_is_generic_handled ... FAILED
+test empty_release_and_server_are_stored ... FAILED
+test frame_with_file_and_line_renders_with_parens_and_colon ... ok
+test frame_with_file_but_no_line_renders_without_colon ... ok
+test frame_with_no_file_renders_bare ... ok
+test frame_with_no_function_renders_unknown ... ok
+test frames_are_populated_most_recent_first ... FAILED
+test is_app_frame_classifies_runtime_libs_as_not_in_app ... ok
+test is_app_frame_classifies_stdlib_as_not_in_app ... ok
+test is_app_frame_classifies_user_code_as_in_app ... ok
+test mechanism_ids_stamped_correctly ... FAILED
+test single_error_produces_one_entry ... FAILED
+test to_debug_info_handles_empty_chain ... ok
+test to_debug_info_flattens_chain ... FAILED
+test to_debug_info_single_entry_has_no_caused_by ... ok
+test to_debug_info_outermost_has_no_caused_by_prefix ... FAILED
+
+failures:
+
+---- captured_frames_have_file stdout ----
+
+thread 'captured_frames_have_file' (3593772) panicked at sererr/tests/capture_test.rs:228:14:
+index out of bounds: the len is 0 but the index is 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- captured_frames_have_function stdout ----
+
+thread 'captured_frames_have_function' (3593773) panicked at sererr/tests/capture_test.rs:217:14:
+index out of bounds: the len is 0 but the index is 0
+
+---- captured_frames_have_line stdout ----
+
+thread 'captured_frames_have_line' (3593774) panicked at sererr/tests/capture_test.rs:238:14:
+index out of bounds: the len is 0 but the index is 0
+
+---- chain_walks_source_most_causal_first stdout ----
+
+thread 'chain_walks_source_most_causal_first' (3593776) panicked at sererr/tests/capture_test.rs:74:5:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+---- captured_frames_mark_user_code_in_app stdout ----
+
+thread 'captured_frames_mark_user_code_in_app' (3593775) panicked at sererr/tests/capture_test.rs:250:27:
+index out of bounds: the len is 0 but the index is 0
+
+---- default_mechanism_is_generic_handled stdout ----
+
+thread 'default_mechanism_is_generic_handled' (3593777) panicked at sererr/tests/capture_test.rs:126:21:
+index out of bounds: the len is 0 but the index is 0
+
+---- empty_release_and_server_are_stored stdout ----
+
+thread 'empty_release_and_server_are_stored' (3593778) panicked at sererr/tests/capture_test.rs:163:21:
+index out of bounds: the len is 0 but the index is 0
+
+---- frames_are_populated_most_recent_first stdout ----
+
+thread 'frames_are_populated_most_recent_first' (3593783) panicked at sererr/tests/capture_test.rs:146:24:
+index out of bounds: the len is 0 but the index is 0
+
+---- mechanism_ids_stamped_correctly stdout ----
+
+thread 'mechanism_ids_stamped_correctly' (3593787) panicked at sererr/tests/capture_test.rs:101:5:
+assertion `left == right` failed
+  left: 0
+ right: 3
+
+---- single_error_produces_one_entry stdout ----
+
+thread 'single_error_produces_one_entry' (3593788) panicked at sererr/tests/capture_test.rs:50:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- to_debug_info_flattens_chain stdout ----
+
+thread 'to_debug_info_flattens_chain' (3593789) panicked at sererr/tests/capture_test.rs:187:5:
+assertion failed: di.detail.contains("WrapError")
+
+---- to_debug_info_outermost_has_no_caused_by_prefix stdout ----
+
+thread 'to_debug_info_outermost_has_no_caused_by_prefix' (3593791) panicked at sererr/tests/capture_test.rs:306:49:
+called `Option::unwrap()` on a `None` value
+
+
+failures:
+    captured_frames_have_file
+    captured_frames_have_function
+    captured_frames_have_line
+    captured_frames_mark_user_code_in_app
+    chain_walks_source_most_causal_first
+    default_mechanism_is_generic_handled
+    empty_release_and_server_are_stored
+    frames_are_populated_most_recent_first
+    mechanism_ids_stamped_correctly
+    single_error_produces_one_entry
+    to_debug_info_flattens_chain
+    to_debug_info_outermost_has_no_caused_by_prefix
+
+test result: FAILED. 9 passed; 12 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sererr --test capture_test`
+
+*** result: Failure(101)

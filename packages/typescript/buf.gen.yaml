@@ -1,0 +1,15 @@
+# Generate TypeScript ES proto types from the sererr proto module.
+#
+# Run via `just proto-gen` (in packages/typescript/justfile) which invokes
+# buf inside docker. Output lands under src/proto/gen/ and is committed —
+# downstream consumers `npm install sererr` and never need protoc or buf.
+
+version: v2
+inputs:
+  - directory: ../../proto
+plugins:
+  - remote: buf.build/bufbuild/es:v2.2.0
+    out: src/proto/gen
+    opt:
+      - target=ts
+      - import_extension=js

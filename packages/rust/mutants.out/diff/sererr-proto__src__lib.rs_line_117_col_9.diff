@@ -1,0 +1,28 @@
+--- sererr-proto/src/lib.rs
++++ replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()
+@@ -109,24 +109,17 @@
+             is_exception_group: m.is_exception_group,
+             data: m.data,
+         }
+     }
+ }
+ 
+ impl From<sererr::CapturedError> for ProtoCapturedError {
+     fn from(e: sererr::CapturedError) -> Self {
+-        ProtoCapturedError {
+-            r#type: e.r#type,
+-            message: e.message,
+-            frames: e.frames.into_iter().map(Into::into).collect(),
+-            mechanism: e.mechanism.map(Into::into),
+-            release: e.release,
+-            server_name: e.server_name,
+-        }
++        Default::default() /* ~ changed by cargo-mutants ~ */
+     }
+ }
+ 
+ impl From<sererr::DebugInfo> for ProtoDebugInfo {
+     fn from(di: sererr::DebugInfo) -> Self {
+         ProtoDebugInfo {
+             stack_entries: di.stack_entries,
+             detail: di.detail,

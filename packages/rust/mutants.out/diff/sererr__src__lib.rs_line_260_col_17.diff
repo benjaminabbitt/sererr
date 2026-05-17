@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ delete field in_app from struct StackFrame expression in capture_frames
+@@ -252,17 +252,17 @@
+                 .unwrap_or_default();
+             let line = symbol.lineno().unwrap_or(0);
+             let in_app = is_app_frame(&function);
+ 
+             out.push(StackFrame {
+                 function,
+                 file,
+                 line,
+-                in_app,
++                 /* ~ changed by cargo-mutants ~ */
+                 ..Default::default()
+             });
+         }
+     }
+     out
+ }
+ 
+ /// Default `in_app` heuristic. Producers with a better signal should

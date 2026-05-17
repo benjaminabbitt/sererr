@@ -1,0 +1,50 @@
+--- sererr/src/lib.rs
++++ replace to_debug_info -> DebugInfo with Default::default()
+@@ -292,46 +292,17 @@
+ /// `stack_entries` gets one line per frame, formatted as
+ /// `"  at <function> (<file>:<line>)"`, most-recent-call-first within
+ /// each chain entry, separated by `"Caused by: <type>: <message>"`
+ /// lines across the chain.
+ ///
+ /// `detail` joins `"<type>: <message>"` across the chain with
+ /// `"\nCaused by: "` separators.
+ pub fn to_debug_info(chain: &[CapturedError]) -> DebugInfo {
+-    if chain.is_empty() {
+-        return DebugInfo::default();
+-    }
+-
+-    let mut stack_entries: Vec<String> = Vec::new();
+-    let mut detail_parts: Vec<String> = Vec::new();
+-
+-    for (idx, entry) in chain.iter().rev().enumerate() {
+-        let header = format!("{}: {}", entry.r#type, entry.message);
+-        detail_parts.push(if idx == 0 {
+-            header.clone()
+-        } else {
+-            format!("Caused by: {header}")
+-        });
+-
+-        if idx == 0 {
+-            stack_entries.push(header);
+-        } else {
+-            stack_entries.push(format!("Caused by: {header}"));
+-        }
+-
+-        for frame in &entry.frames {
+-            stack_entries.push(format_frame_line(frame));
+-        }
+-    }
+-
+-    DebugInfo {
+-        stack_entries,
+-        detail: detail_parts.join("\n"),
+-    }
++    Default::default() /* ~ changed by cargo-mutants ~ */
+ }
+ 
+ fn format_frame_line(frame: &StackFrame) -> String {
+     let location = if frame.file.is_empty() {
+         String::new()
+     } else if frame.line > 0 {
+         format!(" ({}:{})", frame.file, frame.line)
+     } else {

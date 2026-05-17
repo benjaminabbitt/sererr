@@ -1,0 +1,31 @@
+# sererr — Go toolchain container.
+
+FROM docker.io/library/golang:1.22-bookworm
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        git \
+        protobuf-compiler \
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG JUST_VERSION=1.36.0
+RUN curl -fsSL "https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+        | tar -xz -C /usr/local/bin just
+
+# Go proto plugins.
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
+# buf — proto module management.
+ARG BUF_VERSION=1.45.0
+RUN curl -fsSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Linux-x86_64" \
+        -o /usr/local/bin/buf && chmod +x /usr/local/bin/buf
+
+# `gremlins` — Go mutation testing.
+RUN go install github.com/go-gremlins/gremlins/cmd/gremlins@latest
+
+ENV PATH=/go/bin:$PATH
+WORKDIR /workspace

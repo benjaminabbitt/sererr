@@ -1,0 +1,259 @@
+# sererr Mutation testing — per-PR (path-filtered), per-push to main,
+# weekly cron, and on-demand dispatch.
+#
+# Each language's mutation tester (cargo-mutants, mutmut, gremlins,
+# pitest, Stryker.NET, Stryker.JS) is configured with an 85% kill-rate
+# gate — the tool's native flag (gremlins, pitest, Stryker) or a
+# post-process in the package's `just mutants` recipe (cargo-mutants,
+# mutmut). Tests must kill mutants to pass; surviving mutants surface
+# as a non-zero job exit.
+#
+# CI minute budget: each language's mutation run is 5-30 minutes (Rust
+# ran in 23s locally with a 41-mutant surface; larger codebases scale).
+# Path filters mean only the language whose code changed runs on a
+# given PR. The weekly cron runs everything for drift detection.
+
+name: Mutation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'  # Mondays 06:00 UTC — full weekly sweep
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancel in-flight runs when a new PR commit lands.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # ---------------------------------------------------------------------
+  # Detect which language directories changed. PRs only run the mutation
+  # jobs for languages with relevant changes. Schedule + manual dispatch
+  # + push-to-main force all jobs to run.
+  changes:
+    name: detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      rust:       ${{ steps.filter.outputs.rust }}
+      python:     ${{ steps.filter.outputs.python }}
+      go:         ${{ steps.filter.outputs.go }}
+      java:       ${{ steps.filter.outputs.java }}
+      kotlin:     ${{ steps.filter.outputs.kotlin }}
+      csharp:     ${{ steps.filter.outputs.csharp }}
+      typescript: ${{ steps.filter.outputs.typescript }}
+      run-all:    ${{ steps.run-all.outputs.value }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: run-all
+        run: |
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            echo "value=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=false" >> "$GITHUB_OUTPUT"
+          fi
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          # Shared paths (proto schema, this workflow) are duplicated in
+          # each filter rather than aliased — YAML aliases produce
+          # nested lists which dorny/paths-filter rejects.
+          filters: |
+            rust:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/rust/**'
+            python:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/python/**'
+            go:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/go/**'
+            java:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/java/**'
+            kotlin:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/java/**'       # kotlin depends on java
+              - 'packages/kotlin/**'
+            csharp:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/csharp/**'
+            typescript:
+              - 'proto/**'
+              - '.github/workflows/mutation.yml'
+              - 'packages/typescript/**'
+
+  # ---------------------------------------------------------------------
+  rust-mutants:
+    name: rust (cargo-mutants, 85% gate)
+    needs: changes
+    if: needs.changes.outputs.run-all == 'true' || needs.changes.outputs.rust == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/rust
+      - uses: extractions/setup-just@v2
+      - run: cargo install --locked cargo-mutants
+      - name: Run mutants (gate at 85%)
+        run: just _in rust mutants
+        env:
+          SERERR_REQUIRE_CONTAINER: 'false'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rust-mutants-report
+          path: packages/rust/mutants.out/
+
+  # ---------------------------------------------------------------------
+  python-mutants:
+    name: python (mutmut, 85% gate)
+    needs: changes
+    if: needs.changes.outputs.run-all == 'true' || needs.changes.outputs.python == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v4
+      - uses: extractions/setup-just@v2
+      - run: cd packages/python && uv sync --all-extras --dev
+      - name: Run mutmut (gate at 85%)
+        working-directory: packages/python
+        run: just mutants
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: python-mutants-report
+          path: packages/python/.mutmut-cache
+
+  # ---------------------------------------------------------------------
+  go-mutants:
+    name: go (gremlins, --threshold-efficacy 85)
+    needs: changes
+    if: needs.changes.outputs.run-all == 'true' || needs.changes.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - run: go install github.com/go-gremlins/gremlins/cmd/gremlins@latest
+      - name: Run gremlins (native 85% efficacy threshold)
+        working-directory: packages/go
+        run: gremlins unleash --threshold-efficacy 85 ./...
+
+  # ---------------------------------------------------------------------
+  jvm-mutants:
+    name: java + kotlin (pitest, mutationThreshold=85)
+    needs: changes
+    if: |
+      needs.changes.outputs.run-all == 'true' ||
+      needs.changes.outputs.java == 'true' ||
+      needs.changes.outputs.kotlin == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Run pitest on Java + Kotlin (native 85% gate)
+        run: ./gradlew :packages:java:pitest :packages:kotlin:pitest
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jvm-mutants-report
+          path: |
+            packages/java/build/reports/pitest/
+            packages/kotlin/build/reports/pitest/
+
+  # ---------------------------------------------------------------------
+  csharp-mutants:
+    name: csharp (Stryker.NET, --break-at 85)
+    needs: changes
+    if: needs.changes.outputs.run-all == 'true' || needs.changes.outputs.csharp == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+      - run: dotnet tool install -g dotnet-stryker
+      - name: Run Stryker.NET (native 85% break threshold)
+        working-directory: packages/csharp
+        run: dotnet stryker
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: csharp-mutants-report
+          path: packages/csharp/StrykerOutput/
+
+  # ---------------------------------------------------------------------
+  typescript-mutants:
+    name: typescript (Stryker.JS, thresholds.break=85)
+    needs: changes
+    if: needs.changes.outputs.run-all == 'true' || needs.changes.outputs.typescript == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: packages/typescript/package-lock.json
+      - run: cd packages/typescript && npm ci
+      - name: Run Stryker.JS (native 85% break threshold)
+        working-directory: packages/typescript
+        run: npx stryker run
+
+  # ---------------------------------------------------------------------
+  # Aggregate gate. Required check for branch protection: passes when
+  # all triggered language jobs pass (skipped jobs count as passes via
+  # the `always()` + per-job `result` checks).
+  mutation-all:
+    name: mutation (all triggered languages)
+    needs: [rust-mutants, python-mutants, go-mutants, jvm-mutants, csharp-mutants, typescript-mutants]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check every triggered job succeeded
+        run: |
+          declare -A results=(
+            [rust]='${{ needs.rust-mutants.result }}'
+            [python]='${{ needs.python-mutants.result }}'
+            [go]='${{ needs.go-mutants.result }}'
+            [jvm]='${{ needs.jvm-mutants.result }}'
+            [csharp]='${{ needs.csharp-mutants.result }}'
+            [typescript]='${{ needs.typescript-mutants.result }}'
+          )
+          fail=0
+          for lang in "${!results[@]}"; do
+            r="${results[$lang]}"
+            case "$r" in
+              success|skipped) echo "$lang: $r" ;;
+              *) echo "$lang: $r"; fail=1 ;;
+            esac
+          done
+          exit $fail

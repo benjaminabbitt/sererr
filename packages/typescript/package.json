@@ -1,0 +1,46 @@
+{
+  "name": "sererr",
+  "version": "0.1.0",
+  "description": "Sentry-compat structured stack-trace + error-chain capture for JavaScript and TypeScript.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "mutants": "stryker run",
+    "proto:gen": "buf generate ../../proto --template buf.gen.yaml"
+  },
+  "keywords": ["error", "stack-trace", "sentry", "diagnostics"],
+  "license": "MIT OR BSD-3-Clause",
+  "homepage": "https://sererr.fyi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sererr/sererr.git",
+    "directory": "packages/typescript"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.2.0"
+  },
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^2.2.0",
+    "@stryker-mutator/core": "^8.6.0",
+    "@stryker-mutator/vitest-runner": "^8.6.0",
+    "@types/node": "^22",
+    "@vitest/coverage-v8": "^2.0",
+    "typescript": "^5.5",
+    "vitest": "^2.0"
+  }
+}

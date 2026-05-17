@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace == with != in to_debug_info
+@@ -301,17 +301,17 @@
+         return DebugInfo::default();
+     }
+ 
+     let mut stack_entries: Vec<String> = Vec::new();
+     let mut detail_parts: Vec<String> = Vec::new();
+ 
+     for (idx, entry) in chain.iter().rev().enumerate() {
+         let header = format!("{}: {}", entry.r#type, entry.message);
+-        detail_parts.push(if idx == 0 {
++        detail_parts.push(if idx != /* ~ changed by cargo-mutants ~ */ 0 {
+             header.clone()
+         } else {
+             format!("Caused by: {header}")
+         });
+ 
+         if idx == 0 {
+             stack_entries.push(header);
+         } else {

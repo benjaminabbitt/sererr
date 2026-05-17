@@ -1,0 +1,23 @@
+---
+title: Why sererr
+description: The case for a Sentry-compat structured stack-trace proto.
+---
+
+No widely-adopted protobuf standard exists for *structured* stack frames.
+The closest options are all flat text:
+
+| Option | Shape | Limitation |
+|---|---|---|
+| `google.rpc.DebugInfo` (gRPC, AIP-193) | `repeated string stack_entries` | Pre-rendered lines; no `file`/`line`/`function` to render or filter |
+| OpenTelemetry exception conventions | single language-formatted string | Deliberately unstructured |
+| Sentry SDK frame/exception schemas | structured frames + chain + context | Right shape, but JSON in the Sentry product — not a published `.proto` |
+| JVM `StackTraceElement`, Python `FrameSummary`, C# `StackFrame`, Rust `Backtrace` | language data types | Not wire formats |
+
+A UI or replay tool wants to render frames as a list, hide framework
+noise, link to source, and walk the cause chain. None of the above gives
+that on the wire.
+
+`sererr` provides a proto that does, **field-named and numbered to be
+forward-compatible with Sentry's schema**. A thin proto→JSON adapter
+produces a payload Sentry can ingest as one entry of an
+`exception.values` array plus event-level metadata.

@@ -1,0 +1,248 @@
+# sererr Release — fan-out publish on tag push.
+#
+# Tagged as `v<semver>`. Each language job publishes its package to
+# the language's canonical registry using a registry-specific secret.
+# Synchronized versioning across all packages is policy (see
+# README.md); this workflow enforces it by deriving the version from
+# the git tag and passing it into each publish recipe.
+#
+# Required secrets (configure in repo settings before tagging):
+#   CARGO_REGISTRY_TOKEN     — crates.io publishing
+#   PYPI_API_TOKEN           — PyPI publishing
+#   MAVEN_CENTRAL_USERNAME   — Sonatype OSSRH username
+#   MAVEN_CENTRAL_PASSWORD   — Sonatype OSSRH token
+#   NUGET_API_KEY            — NuGet.org publishing
+#   NPM_TOKEN                — npmjs.com publishing
+# Go modules need no token — they publish via the pushed tag itself.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write  # for creating the GitHub release
+  id-token: write  # for OIDC-based registry auth (PyPI Trusted Publishing)
+
+jobs:
+  # ---------------------------------------------------------------------
+  # Extract version from the tag once; all language jobs consume it.
+  version:
+    name: version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - id: v
+        run: |
+          ref="${GITHUB_REF#refs/tags/v}"
+          echo "version=$ref" >> "$GITHUB_OUTPUT"
+          echo "Publishing sererr v$ref"
+
+  # ---------------------------------------------------------------------
+  rust:
+    name: rust → crates.io
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/rust
+      - uses: extractions/setup-just@v2
+
+      # Order matters: sererr → sererr-proto → sererr-flate. Each crate's
+      # path-dep on the prior crate resolves from crates.io once that
+      # crate is published.
+      - name: cargo publish sererr
+        working-directory: packages/rust
+        run: cargo publish -p sererr
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: cargo publish sererr-proto
+        working-directory: packages/rust
+        run: cargo publish -p sererr-proto
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: cargo publish sererr-flate
+        working-directory: packages/rust
+        run: cargo +nightly publish -p sererr-flate
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  # ---------------------------------------------------------------------
+  python:
+    name: python → PyPI
+    needs: version
+    runs-on: ubuntu-latest
+    environment: pypi  # required for PyPI Trusted Publishing OIDC
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v4
+      - uses: extractions/setup-just@v2
+
+      - name: Build wheel + sdist
+        run: just package python
+
+      - name: Publish to PyPI (Trusted Publishing via OIDC)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/python/
+
+  # ---------------------------------------------------------------------
+  go:
+    name: go → pkg.go.dev (via tag)
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # for tag operations
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Verify module compiles at this revision
+        working-directory: packages/go
+        run: go build ./...
+
+      # Go modules are published by pushing a tag of the form
+      # `packages/go/v<version>`. The CI tag `v<version>` triggered this
+      # workflow; we now push the Go-module-style tag so pkg.go.dev
+      # picks up the new version.
+      - name: Push Go module tag
+        run: |
+          GOTAG="packages/go/v${{ needs.version.outputs.version }}"
+          if git rev-parse "$GOTAG" >/dev/null 2>&1; then
+            echo "$GOTAG already exists; skipping"
+          else
+            git tag "$GOTAG"
+            git push origin "$GOTAG"
+          fi
+
+  # ---------------------------------------------------------------------
+  java:
+    name: java → Maven Central
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish to Sonatype OSSRH
+        run: ./gradlew :packages:java:publish -Pversion=${{ needs.version.outputs.version }}
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_SIGNING_KEY_PASSWORD }}
+
+  # ---------------------------------------------------------------------
+  kotlin:
+    name: kotlin → Maven Central
+    needs: [version, java]  # publish after java since kotlin depends on it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish to Sonatype OSSRH
+        run: ./gradlew :packages:kotlin:publish -Pversion=${{ needs.version.outputs.version }}
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_SIGNING_KEY_PASSWORD }}
+
+  # ---------------------------------------------------------------------
+  csharp:
+    name: csharp → NuGet
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+
+      - name: Pack
+        working-directory: packages/csharp
+        run: |
+          dotnet pack /p:PackageVersion=${{ needs.version.outputs.version }} \
+                      --configuration Release
+
+      - name: Push to NuGet.org
+        working-directory: packages/csharp
+        run: |
+          dotnet nuget push "bin/Release/Sererr.${{ needs.version.outputs.version }}.nupkg" \
+                            --source https://api.nuget.org/v3/index.json \
+                            --api-key "$NUGET_API_KEY"
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+  # ---------------------------------------------------------------------
+  typescript:
+    name: typescript → npm
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
+
+      - name: Install + build
+        working-directory: packages/typescript
+        run: |
+          npm ci
+          npm run build
+
+      - name: Set version + publish
+        working-directory: packages/typescript
+        run: |
+          npm version --no-git-tag-version ${{ needs.version.outputs.version }}
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # ---------------------------------------------------------------------
+  github-release:
+    name: GitHub Release
+    needs: [rust, python, go, java, kotlin, csharp, typescript]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          body: |
+            sererr v${{ github.ref_name }}
+
+            Published to:
+            - crates.io: `sererr`, `sererr-proto`, `sererr-flate`
+            - PyPI: `sererr`
+            - pkg.go.dev: `sererr.fyi/sererr/packages/go`
+            - Maven Central: `fyi.sererr:sererr`, `fyi.sererr:sererr-kotlin`
+            - NuGet: `Sererr`
+            - npm: `sererr`
+
+            See [the docs](https://sererr.fyi) for usage.

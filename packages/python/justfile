@@ -1,0 +1,66 @@
+# sererr Python package — per-language justfile.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+build:
+    uv build
+
+# Build wheel + sdist, copy to {{TOP}}/dist/python/.
+package:
+    uv build
+    mkdir -p {{TOP}}/dist/python
+    cp -v dist/* {{TOP}}/dist/python/
+
+test:
+    uv run pytest
+
+# Coverage measurement (term + HTML report under htmlcov/ + lcov.info).
+coverage:
+    uv run pytest --cov --cov-report=term --cov-report=html --cov-report=lcov:lcov.info
+
+# Mutation testing with 85% kill-rate gate. mutmut doesn't have a
+# native threshold flag, so we parse `mutmut results`.
+mutants:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run mutmut run || true
+    # `mutmut results` prints lines like "X mutants total" and outcome lists.
+    # Use `mutmut junitxml` for parseable counts.
+    xml=$(uv run mutmut junitxml)
+    total=$(echo "$xml" | grep -oP 'tests="\K\d+' | head -1)
+    failed=$(echo "$xml" | grep -oP 'failures="\K\d+' | head -1)
+    # In mutmut's JUnit XML, a "failure" is a SURVIVED mutant (test
+    # didn't catch it). Killed mutants are "passing" tests.
+    killed=$(( total - failed ))
+    if [ "$total" -eq 0 ]; then
+        echo "no mutants produced" >&2
+        exit 1
+    fi
+    pct=$(( killed * 100 / total ))
+    printf 'python mutation kill rate: %d / %d = %d%%\n' "$killed" "$total" "$pct"
+    if [ "$pct" -lt 85 ]; then
+        echo "FAIL: below 85%% gate" >&2
+        exit 1
+    fi
+    echo "PASS: at or above 85%% gate"
+
+proto-gen:
+    docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp \
+        -v "{{TOP}}:/workspace" -w /workspace/packages/python \
+        bufbuild/buf:latest generate
+
+publish version:
+    uv publish
+
+lint:
+    uv run ruff check src tests
+
+fmt:
+    uv run ruff format src tests
+
+check: fmt lint test

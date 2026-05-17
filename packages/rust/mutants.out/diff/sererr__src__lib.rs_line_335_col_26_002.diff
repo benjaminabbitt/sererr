@@ -1,0 +1,21 @@
+--- sererr/src/lib.rs
++++ replace > with >= in format_frame_line
+@@ -327,17 +327,17 @@
+         stack_entries,
+         detail: detail_parts.join("\n"),
+     }
+ }
+ 
+ fn format_frame_line(frame: &StackFrame) -> String {
+     let location = if frame.file.is_empty() {
+         String::new()
+-    } else if frame.line > 0 {
++    } else if frame.line >= /* ~ changed by cargo-mutants ~ */ 0 {
+         format!(" ({}:{})", frame.file, frame.line)
+     } else {
+         format!(" ({})", frame.file)
+     };
+     let function = if frame.function.is_empty() {
+         "<unknown>"
+     } else {
+         &frame.function

@@ -1,0 +1,33 @@
+--- sererr-proto/src/lib.rs
++++ replace <impl From<ProtoStackFrame> for sererr::StackFrame>::from -> Self with Default::default()
+@@ -133,29 +133,17 @@
+         }
+     }
+ }
+ 
+ // ---------- proto → plain ----------
+ 
+ impl From<ProtoStackFrame> for sererr::StackFrame {
+     fn from(f: ProtoStackFrame) -> Self {
+-        sererr::StackFrame {
+-            function: f.function,
+-            module: f.module,
+-            package: f.package,
+-            file: f.file,
+-            abs_path: f.abs_path,
+-            line: f.line,
+-            context_line: f.context_line,
+-            pre_context: f.pre_context,
+-            post_context: f.post_context,
+-            source_link: f.source_link,
+-            in_app: f.in_app,
+-        }
++        Default::default() /* ~ changed by cargo-mutants ~ */
+     }
+ }
+ 
+ impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism {
+     fn from(m: ProtoExceptionMechanism) -> Self {
+         sererr::ExceptionMechanism {
+             r#type: m.r#type,
+             description: m.description,

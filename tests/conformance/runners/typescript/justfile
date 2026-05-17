@@ -1,0 +1,19 @@
+# TypeScript conformance runner — invoked by `just conformance` (root),
+# or directly via `just test`.
+
+set shell := ["bash", "-c"]
+
+TOP := `git rev-parse --show-toplevel`
+
+default:
+    @just --list
+
+# Run the cucumber suite. Features and fixtures resolved via env vars.
+test:
+    npm install --silent
+    SERERR_FEATURES_DIR={{TOP}}/tests/conformance/features \
+    SERERR_FIXTURES_DIR={{TOP}}/tests/conformance/fixtures \
+    npm test
+
+build:
+    npm install --silent

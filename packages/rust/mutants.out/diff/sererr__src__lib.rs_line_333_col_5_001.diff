@@ -1,0 +1,26 @@
+--- sererr/src/lib.rs
++++ replace format_frame_line -> String with "xyzzy".into()
+@@ -325,22 +325,10 @@
+ 
+     DebugInfo {
+         stack_entries,
+         detail: detail_parts.join("\n"),
+     }
+ }
+ 
+ fn format_frame_line(frame: &StackFrame) -> String {
+-    let location = if frame.file.is_empty() {
+-        String::new()
+-    } else if frame.line > 0 {
+-        format!(" ({}:{})", frame.file, frame.line)
+-    } else {
+-        format!(" ({})", frame.file)
+-    };
+-    let function = if frame.function.is_empty() {
+-        "<unknown>"
+-    } else {
+-        &frame.function
+-    };
+-    format!("  at {function}{location}")
++    "xyzzy".into() /* ~ changed by cargo-mutants ~ */
+ }

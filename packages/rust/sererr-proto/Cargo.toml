@@ -1,0 +1,21 @@
+[package]
+name = "sererr-proto"
+description = "Protobuf bindings + adapters for sererr. Wire-compatible with the sererr.v1 schema and the gRPC error model (google.rpc.DebugInfo)."
+documentation = "https://docs.rs/sererr-proto"
+
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+sererr = { workspace = true }
+prost = { workspace = true }
+
+# No build-dependencies: proto bindings are generated via `buf` (see
+# `buf.gen.yaml`) and committed under `src/gen/`. Regenerate with
+# `just proto-gen` after schema changes.

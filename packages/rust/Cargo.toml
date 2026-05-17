@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = ["sererr", "sererr-proto", "sererr-flate"]
+# Stable cargo builds these by default; sererr-flate requires nightly
+# and is invoked explicitly via `cargo +nightly build -p sererr-flate`.
+default-members = ["sererr", "sererr-proto"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["sererr contributors"]
+license = "MIT OR BSD-3-Clause"
+homepage = "https://sererr.fyi"
+repository = "https://github.com/sererr/sererr"
+keywords = ["error", "stack-trace", "sentry", "backtrace", "diagnostics"]
+categories = ["development-tools::debugging"]
+
+[workspace.dependencies]
+sererr = { version = "0.1", path = "sererr" }
+sererr-proto = { version = "0.1", path = "sererr-proto" }
+backtrace = "0.3"
+# Aligned with angzarr-core (the downstream Rust consumer) so prost
+# trait impls interoperate across the extern_path boundary. Proto
+# generation goes through `buf` (see sererr-proto/buf.gen.yaml);
+# prost-build is no longer needed as a workspace dep.
+prost = "0.14"

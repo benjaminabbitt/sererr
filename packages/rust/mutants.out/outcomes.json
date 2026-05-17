@@ -1,0 +1,2711 @@
+{
+  "outcomes": [
+    {
+      "scenario": "Baseline",
+      "summary": "Success",
+      "log_path": "log/baseline.log",
+      "diff_path": null,
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.654470978,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.659493435,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:157:5: replace populate_source_context with ()",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 157,
+              "column": 5
+            },
+            "end": {
+              "line": 172,
+              "column": 86
+            }
+          },
+          "replacement": "()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_157_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_157_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.502318268,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.252793187,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:157:19: replace == with != in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 157,
+              "column": 19
+            },
+            "end": {
+              "line": 157,
+              "column": 21
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_157_col_19.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_157_col_19.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.559264629,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.25149958,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:165:12: replace >= with < in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 165,
+              "column": 12
+            },
+            "end": {
+              "line": 165,
+              "column": 14
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_165_col_12.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_165_col_12.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.454243948,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.251245294,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:171:24: replace + with - in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 171,
+              "column": 24
+            },
+            "end": {
+              "line": 171,
+              "column": 25
+            }
+          },
+          "replacement": "-",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_171_col_24.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_171_col_24.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.501694545,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.30179906,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:171:24: replace + with * in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 171,
+              "column": 24
+            },
+            "end": {
+              "line": 171,
+              "column": 25
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_171_col_24_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_171_col_24_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.402800563,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.264510991,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:171:20: replace + with - in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 171,
+              "column": 20
+            },
+            "end": {
+              "line": 171,
+              "column": 21
+            }
+          },
+          "replacement": "-",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_171_col_20.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_171_col_20.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.407014165,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.25125001,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:171:20: replace + with * in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 171,
+              "column": 20
+            },
+            "end": {
+              "line": 171,
+              "column": 21
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_171_col_20_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_171_col_20_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.403826179,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.301583271,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:172:36: replace + with - in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 172,
+              "column": 36
+            },
+            "end": {
+              "line": 172,
+              "column": 37
+            }
+          },
+          "replacement": "-",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_172_col_36.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_172_col_36.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.404145812,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.201171839,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:172:36: replace + with * in populate_source_context",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "populate_source_context",
+            "return_type": "",
+            "span": {
+              "start": {
+                "line": 144,
+                "column": 1
+              },
+              "end": {
+                "line": 173,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 172,
+              "column": 36
+            },
+            "end": {
+              "line": 172,
+              "column": 37
+            }
+          },
+          "replacement": "*",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_172_col_36_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_172_col_36_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.402055422,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.254970574,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![]",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 207,
+              "column": 5
+            },
+            "end": {
+              "line": 235,
+              "column": 10
+            }
+          },
+          "replacement": "vec![]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_207_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_207_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.704903087,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.10109882,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![Default::default()]",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 207,
+              "column": 5
+            },
+            "end": {
+              "line": 235,
+              "column": 10
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_207_col_5_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_207_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.508881575,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.104456666,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:218:17: delete field r#type from struct ExceptionMechanism expression in capture",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 218,
+              "column": 17
+            },
+            "end": {
+              "line": 218,
+              "column": 47
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_218_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_218_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.658463693,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.255818759,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:219:17: delete field handled from struct ExceptionMechanism expression in capture",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 219,
+              "column": 17
+            },
+            "end": {
+              "line": 219,
+              "column": 31
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_219_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_219_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.40835077,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.302682085,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:232:32: replace == with != in capture",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 232,
+              "column": 32
+            },
+            "end": {
+              "line": 232,
+              "column": 34
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_232_col_32.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_232_col_32.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.401941628,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.201292706,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:232:53: replace - with + in capture",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 232,
+              "column": 53
+            },
+            "end": {
+              "line": 232,
+              "column": 54
+            }
+          },
+          "replacement": "+",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_232_col_53.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_232_col_53.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.405460662,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.20121335,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:232:53: replace - with / in capture",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture",
+            "return_type": "-> Vec<CapturedError>",
+            "span": {
+              "start": {
+                "line": 191,
+                "column": 1
+              },
+              "end": {
+                "line": 236,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 232,
+              "column": 53
+            },
+            "end": {
+              "line": 232,
+              "column": 54
+            }
+          },
+          "replacement": "/",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_232_col_53_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_232_col_53_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.401708642,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.203191983,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![]",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 243,
+              "column": 5
+            },
+            "end": {
+              "line": 265,
+              "column": 8
+            }
+          },
+          "replacement": "vec![]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_243_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_243_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.555523254,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.051281368,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![Default::default()]",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 243,
+              "column": 5
+            },
+            "end": {
+              "line": 265,
+              "column": 8
+            }
+          },
+          "replacement": "vec![Default::default()]",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_243_col_5_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_243_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351711219,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.051343739,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:257:17: delete field function from struct StackFrame expression in capture_frames",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 257,
+              "column": 17
+            },
+            "end": {
+              "line": 257,
+              "column": 26
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_257_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_257_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.551665803,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.201067619,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:258:17: delete field file from struct StackFrame expression in capture_frames",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 258,
+              "column": 17
+            },
+            "end": {
+              "line": 258,
+              "column": 22
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_258_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_258_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251460589,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151371581,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:259:17: delete field line from struct StackFrame expression in capture_frames",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 259,
+              "column": 17
+            },
+            "end": {
+              "line": 259,
+              "column": 22
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_259_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_259_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251267535,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151058188,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:260:17: delete field in_app from struct StackFrame expression in capture_frames",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "capture_frames",
+            "return_type": "-> Vec<StackFrame>",
+            "span": {
+              "start": {
+                "line": 238,
+                "column": 1
+              },
+              "end": {
+                "line": 266,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 260,
+              "column": 17
+            },
+            "end": {
+              "line": 260,
+              "column": 24
+            }
+          },
+          "replacement": "",
+          "genre": "StructField"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_260_col_17.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_260_col_17.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.302075951,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151427429,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:271:5: replace is_app_frame -> bool with true",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "is_app_frame",
+            "return_type": "-> bool",
+            "span": {
+              "start": {
+                "line": 268,
+                "column": 1
+              },
+              "end": {
+                "line": 288,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 271,
+              "column": 5
+            },
+            "end": {
+              "line": 287,
+              "column": 62
+            }
+          },
+          "replacement": "true",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_271_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_271_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351710168,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151205169,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:271:5: replace is_app_frame -> bool with false",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "is_app_frame",
+            "return_type": "-> bool",
+            "span": {
+              "start": {
+                "line": 268,
+                "column": 1
+              },
+              "end": {
+                "line": 288,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 271,
+              "column": 5
+            },
+            "end": {
+              "line": 287,
+              "column": 62
+            }
+          },
+          "replacement": "false",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_271_col_5_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_271_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251101955,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.201200393,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:287:5: delete ! in is_app_frame",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "is_app_frame",
+            "return_type": "-> bool",
+            "span": {
+              "start": {
+                "line": 268,
+                "column": 1
+              },
+              "end": {
+                "line": 288,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 287,
+              "column": 5
+            },
+            "end": {
+              "line": 287,
+              "column": 6
+            }
+          },
+          "replacement": "",
+          "genre": "UnaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_287_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_287_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351306852,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.201647445,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:300:5: replace to_debug_info -> DebugInfo with Default::default()",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "to_debug_info",
+            "return_type": "-> DebugInfo",
+            "span": {
+              "start": {
+                "line": 290,
+                "column": 1
+              },
+              "end": {
+                "line": 330,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 300,
+              "column": 5
+            },
+            "end": {
+              "line": 329,
+              "column": 6
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_300_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_300_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351497015,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151034253,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:309:34: replace == with != in to_debug_info",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "to_debug_info",
+            "return_type": "-> DebugInfo",
+            "span": {
+              "start": {
+                "line": 290,
+                "column": 1
+              },
+              "end": {
+                "line": 330,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 309,
+              "column": 34
+            },
+            "end": {
+              "line": 309,
+              "column": 36
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_309_col_34.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_309_col_34.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.301649685,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151453206,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:315:16: replace == with != in to_debug_info",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "to_debug_info",
+            "return_type": "-> DebugInfo",
+            "span": {
+              "start": {
+                "line": 290,
+                "column": 1
+              },
+              "end": {
+                "line": 330,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 315,
+              "column": 16
+            },
+            "end": {
+              "line": 315,
+              "column": 18
+            }
+          },
+          "replacement": "!=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_315_col_16.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_315_col_16.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.301252621,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151886685,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:333:5: replace format_frame_line -> String with String::new()",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "format_frame_line",
+            "return_type": "-> String",
+            "span": {
+              "start": {
+                "line": 332,
+                "column": 1
+              },
+              "end": {
+                "line": 346,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 333,
+              "column": 5
+            },
+            "end": {
+              "line": 345,
+              "column": 41
+            }
+          },
+          "replacement": "String::new()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_333_col_5.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_333_col_5.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.301488116,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151446488,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:333:5: replace format_frame_line -> String with \"xyzzy\".into()",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "format_frame_line",
+            "return_type": "-> String",
+            "span": {
+              "start": {
+                "line": 332,
+                "column": 1
+              },
+              "end": {
+                "line": 346,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 333,
+              "column": 5
+            },
+            "end": {
+              "line": 345,
+              "column": 41
+            }
+          },
+          "replacement": "\"xyzzy\".into()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_333_col_5_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_333_col_5_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.301208704,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.151335162,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:335:26: replace > with == in format_frame_line",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "format_frame_line",
+            "return_type": "-> String",
+            "span": {
+              "start": {
+                "line": 332,
+                "column": 1
+              },
+              "end": {
+                "line": 346,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 335,
+              "column": 26
+            },
+            "end": {
+              "line": 335,
+              "column": 27
+            }
+          },
+          "replacement": "==",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_335_col_26.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_335_col_26.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251387991,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.150986676,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:335:26: replace > with < in format_frame_line",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "format_frame_line",
+            "return_type": "-> String",
+            "span": {
+              "start": {
+                "line": 332,
+                "column": 1
+              },
+              "end": {
+                "line": 346,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 335,
+              "column": 26
+            },
+            "end": {
+              "line": 335,
+              "column": 27
+            }
+          },
+          "replacement": "<",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_335_col_26_001.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_335_col_26_001.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251542353,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.1512683,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr/src/lib.rs:335:26: replace > with >= in format_frame_line",
+          "package": "sererr",
+          "file": "sererr/src/lib.rs",
+          "function": {
+            "function_name": "format_frame_line",
+            "return_type": "-> String",
+            "span": {
+              "start": {
+                "line": 332,
+                "column": 1
+              },
+              "end": {
+                "line": 346,
+                "column": 2
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 335,
+              "column": 26
+            },
+            "end": {
+              "line": 335,
+              "column": 27
+            }
+          },
+          "replacement": ">=",
+          "genre": "BinaryOperator"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr__src__lib.rs_line_335_col_26_002.log",
+      "diff_path": "diff/sererr__src__lib.rs_line_335_col_26_002.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.251382505,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.202592644,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:82:9: replace <impl From<sererr::StackFrame> for ProtoStackFrame>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<sererr::StackFrame> for ProtoStackFrame>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 81,
+                "column": 5
+              },
+              "end": {
+                "line": 95,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 82,
+              "column": 9
+            },
+            "end": {
+              "line": 94,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_82_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_82_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.352960666,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.051220054,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:100:9: replace <impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 99,
+                "column": 5
+              },
+              "end": {
+                "line": 112,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 100,
+              "column": 9
+            },
+            "end": {
+              "line": 111,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_100_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_100_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.25102148,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.050851094,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:117:9: replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<sererr::CapturedError> for ProtoCapturedError>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 116,
+                "column": 5
+              },
+              "end": {
+                "line": 125,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 117,
+              "column": 9
+            },
+            "end": {
+              "line": 124,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_117_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_117_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.302031859,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.051221897,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:130:9: replace <impl From<sererr::DebugInfo> for ProtoDebugInfo>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<sererr::DebugInfo> for ProtoDebugInfo>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 129,
+                "column": 5
+              },
+              "end": {
+                "line": 134,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 130,
+              "column": 9
+            },
+            "end": {
+              "line": 133,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_130_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_130_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351512146,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.050883319,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:141:9: replace <impl From<ProtoStackFrame> for sererr::StackFrame>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<ProtoStackFrame> for sererr::StackFrame>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 140,
+                "column": 5
+              },
+              "end": {
+                "line": 154,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 141,
+              "column": 9
+            },
+            "end": {
+              "line": 153,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_141_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_141_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.301413869,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.051211763,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:159:9: replace <impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 158,
+                "column": 5
+              },
+              "end": {
+                "line": 171,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 159,
+              "column": 9
+            },
+            "end": {
+              "line": 170,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_159_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_159_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.304005184,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.050815498,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:176:9: replace <impl From<ProtoCapturedError> for sererr::CapturedError>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<ProtoCapturedError> for sererr::CapturedError>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 175,
+                "column": 5
+              },
+              "end": {
+                "line": 184,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 176,
+              "column": 9
+            },
+            "end": {
+              "line": 183,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_176_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_176_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.351189758,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.050861342,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "Mutant": {
+          "name": "sererr-proto/src/lib.rs:189:9: replace <impl From<ProtoDebugInfo> for sererr::DebugInfo>::from -> Self with Default::default()",
+          "package": "sererr-proto",
+          "file": "sererr-proto/src/lib.rs",
+          "function": {
+            "function_name": "<impl From<ProtoDebugInfo> for sererr::DebugInfo>::from",
+            "return_type": "-> Self",
+            "span": {
+              "start": {
+                "line": 188,
+                "column": 5
+              },
+              "end": {
+                "line": 193,
+                "column": 6
+              }
+            }
+          },
+          "span": {
+            "start": {
+              "line": 189,
+              "column": 9
+            },
+            "end": {
+              "line": 192,
+              "column": 10
+            }
+          },
+          "replacement": "Default::default()",
+          "genre": "FnValue"
+        }
+      },
+      "summary": "CaughtMutant",
+      "log_path": "log/sererr-proto__src__lib.rs_line_189_col_9.log",
+      "diff_path": "diff/sererr-proto__src__lib.rs_line_189_col_9.diff",
+      "phase_results": [
+        {
+          "phase": "Build",
+          "duration": 0.401323151,
+          "process_status": "Success",
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--no-run",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        },
+        {
+          "phase": "Test",
+          "duration": 0.050801991,
+          "process_status": {
+            "Failure": 101
+          },
+          "argv": [
+            "/home/babbitt/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo",
+            "test",
+            "--verbose",
+            "--package=sererr-proto@0.1.0"
+          ]
+        }
+      ]
+    }
+  ],
+  "total_mutants": 41,
+  "missed": 0,
+  "caught": 41,
+  "timeout": 0,
+  "unviable": 0,
+  "success": 0,
+  "start_time": "2026-05-17T01:16:42.920140227Z",
+  "end_time": "2026-05-17T01:17:06.645973334Z",
+  "cargo_mutants_version": "26.2.0"
+}

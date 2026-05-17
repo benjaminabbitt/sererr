@@ -1,0 +1,1314 @@
+[
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace populate_source_context with ()\n@@ -149,32 +149,17 @@\n ///\n /// No-op when the provider returns `None`, when the frame's `line` is\n /// 0 (unknown), or when the file content is shorter than `frame.line`.\n pub fn populate_source_context<P: SourceProvider>(\n     frame: &mut StackFrame,\n     provider: &P,\n     surrounding: usize,\n ) {\n-    if frame.line == 0 {\n-        return;\n-    }\n-    let Some(source) = provider.get_source(&frame.file) else {\n-        return;\n-    };\n-    let lines: Vec<&str> = source.lines().collect();\n-    let idx = (frame.line as usize).saturating_sub(1);\n-    if idx >= lines.len() {\n-        return;\n-    }\n-    frame.context_line = lines[idx].to_string();\n-    let start = idx.saturating_sub(surrounding);\n-    frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n-    let end = (idx + 1 + surrounding).min(lines.len());\n-    frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n+    () /* ~ changed by cargo-mutants ~ */\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n /// google_rpc::DebugInfo` conversion when you need the actual proto\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:157:5: replace populate_source_context with ()",
+    "package": "sererr",
+    "replacement": "()",
+    "span": {
+      "end": {
+        "column": 86,
+        "line": 172
+      },
+      "start": {
+        "column": 5,
+        "line": 157
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace == with != in populate_source_context\n@@ -149,17 +149,17 @@\n ///\n /// No-op when the provider returns `None`, when the frame's `line` is\n /// 0 (unknown), or when the file content is shorter than `frame.line`.\n pub fn populate_source_context<P: SourceProvider>(\n     frame: &mut StackFrame,\n     provider: &P,\n     surrounding: usize,\n ) {\n-    if frame.line == 0 {\n+    if frame.line != /* ~ changed by cargo-mutants ~ */ 0 {\n         return;\n     }\n     let Some(source) = provider.get_source(&frame.file) else {\n         return;\n     };\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:157:19: replace == with != in populate_source_context",
+    "package": "sererr",
+    "replacement": "!=",
+    "span": {
+      "end": {
+        "column": 21,
+        "line": 157
+      },
+      "start": {
+        "column": 19,
+        "line": 157
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace >= with < in populate_source_context\n@@ -157,17 +157,17 @@\n     if frame.line == 0 {\n         return;\n     }\n     let Some(source) = provider.get_source(&frame.file) else {\n         return;\n     };\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n-    if idx >= lines.len() {\n+    if idx < /* ~ changed by cargo-mutants ~ */ lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n     let end = (idx + 1 + surrounding).min(lines.len());\n     frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:165:12: replace >= with < in populate_source_context",
+    "package": "sererr",
+    "replacement": "<",
+    "span": {
+      "end": {
+        "column": 14,
+        "line": 165
+      },
+      "start": {
+        "column": 12,
+        "line": 165
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with - in populate_source_context\n@@ -163,17 +163,17 @@\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n-    let end = (idx + 1 + surrounding).min(lines.len());\n+    let end = (idx + 1 - /* ~ changed by cargo-mutants ~ */ surrounding).min(lines.len());\n     frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:171:24: replace + with - in populate_source_context",
+    "package": "sererr",
+    "replacement": "-",
+    "span": {
+      "end": {
+        "column": 25,
+        "line": 171
+      },
+      "start": {
+        "column": 24,
+        "line": 171
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with * in populate_source_context\n@@ -163,17 +163,17 @@\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n-    let end = (idx + 1 + surrounding).min(lines.len());\n+    let end = (idx + 1 * /* ~ changed by cargo-mutants ~ */ surrounding).min(lines.len());\n     frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:171:24: replace + with * in populate_source_context",
+    "package": "sererr",
+    "replacement": "*",
+    "span": {
+      "end": {
+        "column": 25,
+        "line": 171
+      },
+      "start": {
+        "column": 24,
+        "line": 171
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with - in populate_source_context\n@@ -163,17 +163,17 @@\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n-    let end = (idx + 1 + surrounding).min(lines.len());\n+    let end = (idx - /* ~ changed by cargo-mutants ~ */ 1 + surrounding).min(lines.len());\n     frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:171:20: replace + with - in populate_source_context",
+    "package": "sererr",
+    "replacement": "-",
+    "span": {
+      "end": {
+        "column": 21,
+        "line": 171
+      },
+      "start": {
+        "column": 20,
+        "line": 171
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with * in populate_source_context\n@@ -163,17 +163,17 @@\n     let lines: Vec<&str> = source.lines().collect();\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n-    let end = (idx + 1 + surrounding).min(lines.len());\n+    let end = (idx * /* ~ changed by cargo-mutants ~ */ 1 + surrounding).min(lines.len());\n     frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:171:20: replace + with * in populate_source_context",
+    "package": "sererr",
+    "replacement": "*",
+    "span": {
+      "end": {
+        "column": 21,
+        "line": 171
+      },
+      "start": {
+        "column": 20,
+        "line": 171
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with - in populate_source_context\n@@ -164,17 +164,17 @@\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n     let end = (idx + 1 + surrounding).min(lines.len());\n-    frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n+    frame.post_context = lines[idx - /* ~ changed by cargo-mutants ~ */ 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n /// google_rpc::DebugInfo` conversion when you need the actual proto\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:172:36: replace + with - in populate_source_context",
+    "package": "sererr",
+    "replacement": "-",
+    "span": {
+      "end": {
+        "column": 37,
+        "line": 172
+      },
+      "start": {
+        "column": 36,
+        "line": 172
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace + with * in populate_source_context\n@@ -164,17 +164,17 @@\n     let idx = (frame.line as usize).saturating_sub(1);\n     if idx >= lines.len() {\n         return;\n     }\n     frame.context_line = lines[idx].to_string();\n     let start = idx.saturating_sub(surrounding);\n     frame.pre_context = lines[start..idx].iter().map(|s| s.to_string()).collect();\n     let end = (idx + 1 + surrounding).min(lines.len());\n-    frame.post_context = lines[idx + 1..end].iter().map(|s| s.to_string()).collect();\n+    frame.post_context = lines[idx * /* ~ changed by cargo-mutants ~ */ 1..end].iter().map(|s| s.to_string()).collect();\n }\n \n /// Adapter shape for the gRPC error model (`google.rpc.DebugInfo`).\n ///\n /// Plain Rust struct, wire-compatible with `google.rpc.DebugInfo`. Use\n /// [`to_debug_info`] to render a capture into this shape. The\n /// `sererr-proto` crate provides a `From<DebugInfo> for\n /// google_rpc::DebugInfo` conversion when you need the actual proto\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "populate_source_context",
+      "return_type": "",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 173
+        },
+        "start": {
+          "column": 1,
+          "line": 144
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:172:36: replace + with * in populate_source_context",
+    "package": "sererr",
+    "replacement": "*",
+    "span": {
+      "end": {
+        "column": 37,
+        "line": 172
+      },
+      "start": {
+        "column": 36,
+        "line": 172
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace capture -> Vec<CapturedError> with vec![]\n@@ -199,45 +199,17 @@\n /// runtime type of a `&dyn Error` — producers supply it at the catch\n /// site.\n pub fn capture(\n     err: &(dyn Error + 'static),\n     type_name: &str,\n     release: &str,\n     server_name: &str,\n ) -> Vec<CapturedError> {\n-    let frames = capture_frames();\n-\n-    let mut chain: Vec<CapturedError> = Vec::new();\n-    let mut current: Option<&(dyn Error + 'static)> = Some(err);\n-    let mut leaf_type = type_name.to_string();\n-    while let Some(e) = current {\n-        chain.push(CapturedError {\n-            r#type: std::mem::take(&mut leaf_type),\n-            message: format!(\"{e}\"),\n-            frames: frames.clone(),\n-            mechanism: Some(ExceptionMechanism {\n-                r#type: \"generic\".to_string(),\n-                handled: true,\n-                ..Default::default()\n-            }),\n-            release: release.to_string(),\n-            server_name: server_name.to_string(),\n-        });\n-        current = e.source();\n-    }\n-    chain.reverse();\n-\n-    for (i, entry) in chain.iter_mut().enumerate() {\n-        if let Some(m) = entry.mechanism.as_mut() {\n-            m.exception_id = i as u32;\n-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };\n-        }\n-    }\n-    chain\n+    vec![] /* ~ changed by cargo-mutants ~ */\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n /// frames are marked `in_app = false` via a prefix heuristic.\n pub fn capture_frames() -> Vec<StackFrame> {\n     let bt = backtrace::Backtrace::new();\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![]",
+    "package": "sererr",
+    "replacement": "vec![]",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 235
+      },
+      "start": {
+        "column": 5,
+        "line": 207
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace capture -> Vec<CapturedError> with vec![Default::default()]\n@@ -199,45 +199,17 @@\n /// runtime type of a `&dyn Error` — producers supply it at the catch\n /// site.\n pub fn capture(\n     err: &(dyn Error + 'static),\n     type_name: &str,\n     release: &str,\n     server_name: &str,\n ) -> Vec<CapturedError> {\n-    let frames = capture_frames();\n-\n-    let mut chain: Vec<CapturedError> = Vec::new();\n-    let mut current: Option<&(dyn Error + 'static)> = Some(err);\n-    let mut leaf_type = type_name.to_string();\n-    while let Some(e) = current {\n-        chain.push(CapturedError {\n-            r#type: std::mem::take(&mut leaf_type),\n-            message: format!(\"{e}\"),\n-            frames: frames.clone(),\n-            mechanism: Some(ExceptionMechanism {\n-                r#type: \"generic\".to_string(),\n-                handled: true,\n-                ..Default::default()\n-            }),\n-            release: release.to_string(),\n-            server_name: server_name.to_string(),\n-        });\n-        current = e.source();\n-    }\n-    chain.reverse();\n-\n-    for (i, entry) in chain.iter_mut().enumerate() {\n-        if let Some(m) = entry.mechanism.as_mut() {\n-            m.exception_id = i as u32;\n-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };\n-        }\n-    }\n-    chain\n+    vec![Default::default()] /* ~ changed by cargo-mutants ~ */\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n /// frames are marked `in_app = false` via a prefix heuristic.\n pub fn capture_frames() -> Vec<StackFrame> {\n     let bt = backtrace::Backtrace::new();\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:207:5: replace capture -> Vec<CapturedError> with vec![Default::default()]",
+    "package": "sererr",
+    "replacement": "vec![Default::default()]",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 235
+      },
+      "start": {
+        "column": 5,
+        "line": 207
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field r#type from struct ExceptionMechanism expression in capture\n@@ -210,17 +210,17 @@\n     let mut current: Option<&(dyn Error + 'static)> = Some(err);\n     let mut leaf_type = type_name.to_string();\n     while let Some(e) = current {\n         chain.push(CapturedError {\n             r#type: std::mem::take(&mut leaf_type),\n             message: format!(\"{e}\"),\n             frames: frames.clone(),\n             mechanism: Some(ExceptionMechanism {\n-                r#type: \"generic\".to_string(),\n+                 /* ~ changed by cargo-mutants ~ */\n                 handled: true,\n                 ..Default::default()\n             }),\n             release: release.to_string(),\n             server_name: server_name.to_string(),\n         });\n         current = e.source();\n     }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:218:17: delete field r#type from struct ExceptionMechanism expression in capture",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 47,
+        "line": 218
+      },
+      "start": {
+        "column": 17,
+        "line": 218
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field handled from struct ExceptionMechanism expression in capture\n@@ -211,17 +211,17 @@\n     let mut leaf_type = type_name.to_string();\n     while let Some(e) = current {\n         chain.push(CapturedError {\n             r#type: std::mem::take(&mut leaf_type),\n             message: format!(\"{e}\"),\n             frames: frames.clone(),\n             mechanism: Some(ExceptionMechanism {\n                 r#type: \"generic\".to_string(),\n-                handled: true,\n+                 /* ~ changed by cargo-mutants ~ */\n                 ..Default::default()\n             }),\n             release: release.to_string(),\n             server_name: server_name.to_string(),\n         });\n         current = e.source();\n     }\n     chain.reverse();\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:219:17: delete field handled from struct ExceptionMechanism expression in capture",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 31,
+        "line": 219
+      },
+      "start": {
+        "column": 17,
+        "line": 219
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace == with != in capture\n@@ -224,17 +224,17 @@\n         });\n         current = e.source();\n     }\n     chain.reverse();\n \n     for (i, entry) in chain.iter_mut().enumerate() {\n         if let Some(m) = entry.mechanism.as_mut() {\n             m.exception_id = i as u32;\n-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };\n+            m.parent_id = if i != /* ~ changed by cargo-mutants ~ */ 0 { 0 } else { (i - 1) as u32 };\n         }\n     }\n     chain\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:232:32: replace == with != in capture",
+    "package": "sererr",
+    "replacement": "!=",
+    "span": {
+      "end": {
+        "column": 34,
+        "line": 232
+      },
+      "start": {
+        "column": 32,
+        "line": 232
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace - with + in capture\n@@ -224,17 +224,17 @@\n         });\n         current = e.source();\n     }\n     chain.reverse();\n \n     for (i, entry) in chain.iter_mut().enumerate() {\n         if let Some(m) = entry.mechanism.as_mut() {\n             m.exception_id = i as u32;\n-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };\n+            m.parent_id = if i == 0 { 0 } else { (i + /* ~ changed by cargo-mutants ~ */ 1) as u32 };\n         }\n     }\n     chain\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:232:53: replace - with + in capture",
+    "package": "sererr",
+    "replacement": "+",
+    "span": {
+      "end": {
+        "column": 54,
+        "line": 232
+      },
+      "start": {
+        "column": 53,
+        "line": 232
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace - with / in capture\n@@ -224,17 +224,17 @@\n         });\n         current = e.source();\n     }\n     chain.reverse();\n \n     for (i, entry) in chain.iter_mut().enumerate() {\n         if let Some(m) = entry.mechanism.as_mut() {\n             m.exception_id = i as u32;\n-            m.parent_id = if i == 0 { 0 } else { (i - 1) as u32 };\n+            m.parent_id = if i == 0 { 0 } else { (i / /* ~ changed by cargo-mutants ~ */ 1) as u32 };\n         }\n     }\n     chain\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture",
+      "return_type": "-> Vec<CapturedError>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 236
+        },
+        "start": {
+          "column": 1,
+          "line": 191
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:232:53: replace - with / in capture",
+    "package": "sererr",
+    "replacement": "/",
+    "span": {
+      "end": {
+        "column": 54,
+        "line": 232
+      },
+      "start": {
+        "column": 53,
+        "line": 232
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace capture_frames -> Vec<StackFrame> with vec![]\n@@ -235,39 +235,17 @@\n     chain\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n /// frames are marked `in_app = false` via a prefix heuristic.\n pub fn capture_frames() -> Vec<StackFrame> {\n-    let bt = backtrace::Backtrace::new();\n-\n-    let mut out: Vec<StackFrame> = Vec::new();\n-    for frame in bt.frames() {\n-        for symbol in frame.symbols() {\n-            let function = symbol.name().map(|n| n.to_string()).unwrap_or_default();\n-            let file = symbol\n-                .filename()\n-                .map(|p| p.display().to_string())\n-                .unwrap_or_default();\n-            let line = symbol.lineno().unwrap_or(0);\n-            let in_app = is_app_frame(&function);\n-\n-            out.push(StackFrame {\n-                function,\n-                file,\n-                line,\n-                in_app,\n-                ..Default::default()\n-            });\n-        }\n-    }\n-    out\n+    vec![] /* ~ changed by cargo-mutants ~ */\n }\n \n /// Default `in_app` heuristic. Producers with a better signal should\n /// not rely on this.\n pub fn is_app_frame(function: &str) -> bool {\n     const NON_APP_PREFIXES: &[&str] = &[\n         \"std::\",\n         \"core::\",\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![]",
+    "package": "sererr",
+    "replacement": "vec![]",
+    "span": {
+      "end": {
+        "column": 8,
+        "line": 265
+      },
+      "start": {
+        "column": 5,
+        "line": 243
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace capture_frames -> Vec<StackFrame> with vec![Default::default()]\n@@ -235,39 +235,17 @@\n     chain\n }\n \n /// Capture frames from the calling stack.\n ///\n /// Frames are returned most-recent-call-first. Runtime / framework\n /// frames are marked `in_app = false` via a prefix heuristic.\n pub fn capture_frames() -> Vec<StackFrame> {\n-    let bt = backtrace::Backtrace::new();\n-\n-    let mut out: Vec<StackFrame> = Vec::new();\n-    for frame in bt.frames() {\n-        for symbol in frame.symbols() {\n-            let function = symbol.name().map(|n| n.to_string()).unwrap_or_default();\n-            let file = symbol\n-                .filename()\n-                .map(|p| p.display().to_string())\n-                .unwrap_or_default();\n-            let line = symbol.lineno().unwrap_or(0);\n-            let in_app = is_app_frame(&function);\n-\n-            out.push(StackFrame {\n-                function,\n-                file,\n-                line,\n-                in_app,\n-                ..Default::default()\n-            });\n-        }\n-    }\n-    out\n+    vec![Default::default()] /* ~ changed by cargo-mutants ~ */\n }\n \n /// Default `in_app` heuristic. Producers with a better signal should\n /// not rely on this.\n pub fn is_app_frame(function: &str) -> bool {\n     const NON_APP_PREFIXES: &[&str] = &[\n         \"std::\",\n         \"core::\",\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:243:5: replace capture_frames -> Vec<StackFrame> with vec![Default::default()]",
+    "package": "sererr",
+    "replacement": "vec![Default::default()]",
+    "span": {
+      "end": {
+        "column": 8,
+        "line": 265
+      },
+      "start": {
+        "column": 5,
+        "line": 243
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field function from struct StackFrame expression in capture_frames\n@@ -249,17 +249,17 @@\n             let file = symbol\n                 .filename()\n                 .map(|p| p.display().to_string())\n                 .unwrap_or_default();\n             let line = symbol.lineno().unwrap_or(0);\n             let in_app = is_app_frame(&function);\n \n             out.push(StackFrame {\n-                function,\n+                 /* ~ changed by cargo-mutants ~ */\n                 file,\n                 line,\n                 in_app,\n                 ..Default::default()\n             });\n         }\n     }\n     out\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:257:17: delete field function from struct StackFrame expression in capture_frames",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 26,
+        "line": 257
+      },
+      "start": {
+        "column": 17,
+        "line": 257
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field file from struct StackFrame expression in capture_frames\n@@ -250,17 +250,17 @@\n                 .filename()\n                 .map(|p| p.display().to_string())\n                 .unwrap_or_default();\n             let line = symbol.lineno().unwrap_or(0);\n             let in_app = is_app_frame(&function);\n \n             out.push(StackFrame {\n                 function,\n-                file,\n+                 /* ~ changed by cargo-mutants ~ */\n                 line,\n                 in_app,\n                 ..Default::default()\n             });\n         }\n     }\n     out\n }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:258:17: delete field file from struct StackFrame expression in capture_frames",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 22,
+        "line": 258
+      },
+      "start": {
+        "column": 17,
+        "line": 258
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field line from struct StackFrame expression in capture_frames\n@@ -251,17 +251,17 @@\n                 .map(|p| p.display().to_string())\n                 .unwrap_or_default();\n             let line = symbol.lineno().unwrap_or(0);\n             let in_app = is_app_frame(&function);\n \n             out.push(StackFrame {\n                 function,\n                 file,\n-                line,\n+                 /* ~ changed by cargo-mutants ~ */\n                 in_app,\n                 ..Default::default()\n             });\n         }\n     }\n     out\n }\n \n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:259:17: delete field line from struct StackFrame expression in capture_frames",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 22,
+        "line": 259
+      },
+      "start": {
+        "column": 17,
+        "line": 259
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete field in_app from struct StackFrame expression in capture_frames\n@@ -252,17 +252,17 @@\n                 .unwrap_or_default();\n             let line = symbol.lineno().unwrap_or(0);\n             let in_app = is_app_frame(&function);\n \n             out.push(StackFrame {\n                 function,\n                 file,\n                 line,\n-                in_app,\n+                 /* ~ changed by cargo-mutants ~ */\n                 ..Default::default()\n             });\n         }\n     }\n     out\n }\n \n /// Default `in_app` heuristic. Producers with a better signal should\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "capture_frames",
+      "return_type": "-> Vec<StackFrame>",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 266
+        },
+        "start": {
+          "column": 1,
+          "line": 238
+        }
+      }
+    },
+    "genre": "StructField",
+    "name": "sererr/src/lib.rs:260:17: delete field in_app from struct StackFrame expression in capture_frames",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 24,
+        "line": 260
+      },
+      "start": {
+        "column": 17,
+        "line": 260
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace is_app_frame -> bool with true\n@@ -263,33 +263,17 @@\n         }\n     }\n     out\n }\n \n /// Default `in_app` heuristic. Producers with a better signal should\n /// not rely on this.\n pub fn is_app_frame(function: &str) -> bool {\n-    const NON_APP_PREFIXES: &[&str] = &[\n-        \"std::\",\n-        \"core::\",\n-        \"alloc::\",\n-        \"<core::\",\n-        \"<std::\",\n-        \"<alloc::\",\n-        \"<unknown>\",\n-        \"rustc_\",\n-        \"__rust_\",\n-        \"_start\",\n-        \"main\",\n-        \"tokio::\",\n-        \"backtrace::\",\n-        \"sererr::\",\n-    ];\n-    !NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))\n+    true /* ~ changed by cargo-mutants ~ */\n }\n \n /// Adapt a sererr capture into the [`DebugInfo`] shape.\n ///\n /// `stack_entries` gets one line per frame, formatted as\n /// `\"  at <function> (<file>:<line>)\"`, most-recent-call-first within\n /// each chain entry, separated by `\"Caused by: <type>: <message>\"`\n /// lines across the chain.\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "is_app_frame",
+      "return_type": "-> bool",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 288
+        },
+        "start": {
+          "column": 1,
+          "line": 268
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:271:5: replace is_app_frame -> bool with true",
+    "package": "sererr",
+    "replacement": "true",
+    "span": {
+      "end": {
+        "column": 62,
+        "line": 287
+      },
+      "start": {
+        "column": 5,
+        "line": 271
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace is_app_frame -> bool with false\n@@ -263,33 +263,17 @@\n         }\n     }\n     out\n }\n \n /// Default `in_app` heuristic. Producers with a better signal should\n /// not rely on this.\n pub fn is_app_frame(function: &str) -> bool {\n-    const NON_APP_PREFIXES: &[&str] = &[\n-        \"std::\",\n-        \"core::\",\n-        \"alloc::\",\n-        \"<core::\",\n-        \"<std::\",\n-        \"<alloc::\",\n-        \"<unknown>\",\n-        \"rustc_\",\n-        \"__rust_\",\n-        \"_start\",\n-        \"main\",\n-        \"tokio::\",\n-        \"backtrace::\",\n-        \"sererr::\",\n-    ];\n-    !NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))\n+    false /* ~ changed by cargo-mutants ~ */\n }\n \n /// Adapt a sererr capture into the [`DebugInfo`] shape.\n ///\n /// `stack_entries` gets one line per frame, formatted as\n /// `\"  at <function> (<file>:<line>)\"`, most-recent-call-first within\n /// each chain entry, separated by `\"Caused by: <type>: <message>\"`\n /// lines across the chain.\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "is_app_frame",
+      "return_type": "-> bool",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 288
+        },
+        "start": {
+          "column": 1,
+          "line": 268
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:271:5: replace is_app_frame -> bool with false",
+    "package": "sererr",
+    "replacement": "false",
+    "span": {
+      "end": {
+        "column": 62,
+        "line": 287
+      },
+      "start": {
+        "column": 5,
+        "line": 271
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ delete ! in is_app_frame\n@@ -279,17 +279,17 @@\n         \"rustc_\",\n         \"__rust_\",\n         \"_start\",\n         \"main\",\n         \"tokio::\",\n         \"backtrace::\",\n         \"sererr::\",\n     ];\n-    !NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))\n+     /* ~ changed by cargo-mutants ~ */NON_APP_PREFIXES.iter().any(|p| function.starts_with(p))\n }\n \n /// Adapt a sererr capture into the [`DebugInfo`] shape.\n ///\n /// `stack_entries` gets one line per frame, formatted as\n /// `\"  at <function> (<file>:<line>)\"`, most-recent-call-first within\n /// each chain entry, separated by `\"Caused by: <type>: <message>\"`\n /// lines across the chain.\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "is_app_frame",
+      "return_type": "-> bool",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 288
+        },
+        "start": {
+          "column": 1,
+          "line": 268
+        }
+      }
+    },
+    "genre": "UnaryOperator",
+    "name": "sererr/src/lib.rs:287:5: delete ! in is_app_frame",
+    "package": "sererr",
+    "replacement": "",
+    "span": {
+      "end": {
+        "column": 6,
+        "line": 287
+      },
+      "start": {
+        "column": 5,
+        "line": 287
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace to_debug_info -> DebugInfo with Default::default()\n@@ -292,46 +292,17 @@\n /// `stack_entries` gets one line per frame, formatted as\n /// `\"  at <function> (<file>:<line>)\"`, most-recent-call-first within\n /// each chain entry, separated by `\"Caused by: <type>: <message>\"`\n /// lines across the chain.\n ///\n /// `detail` joins `\"<type>: <message>\"` across the chain with\n /// `\"\\nCaused by: \"` separators.\n pub fn to_debug_info(chain: &[CapturedError]) -> DebugInfo {\n-    if chain.is_empty() {\n-        return DebugInfo::default();\n-    }\n-\n-    let mut stack_entries: Vec<String> = Vec::new();\n-    let mut detail_parts: Vec<String> = Vec::new();\n-\n-    for (idx, entry) in chain.iter().rev().enumerate() {\n-        let header = format!(\"{}: {}\", entry.r#type, entry.message);\n-        detail_parts.push(if idx == 0 {\n-            header.clone()\n-        } else {\n-            format!(\"Caused by: {header}\")\n-        });\n-\n-        if idx == 0 {\n-            stack_entries.push(header);\n-        } else {\n-            stack_entries.push(format!(\"Caused by: {header}\"));\n-        }\n-\n-        for frame in &entry.frames {\n-            stack_entries.push(format_frame_line(frame));\n-        }\n-    }\n-\n-    DebugInfo {\n-        stack_entries,\n-        detail: detail_parts.join(\"\\n\"),\n-    }\n+    Default::default() /* ~ changed by cargo-mutants ~ */\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n     let location = if frame.file.is_empty() {\n         String::new()\n     } else if frame.line > 0 {\n         format!(\" ({}:{})\", frame.file, frame.line)\n     } else {\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "to_debug_info",
+      "return_type": "-> DebugInfo",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 330
+        },
+        "start": {
+          "column": 1,
+          "line": 290
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:300:5: replace to_debug_info -> DebugInfo with Default::default()",
+    "package": "sererr",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 6,
+        "line": 329
+      },
+      "start": {
+        "column": 5,
+        "line": 300
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace == with != in to_debug_info\n@@ -301,17 +301,17 @@\n         return DebugInfo::default();\n     }\n \n     let mut stack_entries: Vec<String> = Vec::new();\n     let mut detail_parts: Vec<String> = Vec::new();\n \n     for (idx, entry) in chain.iter().rev().enumerate() {\n         let header = format!(\"{}: {}\", entry.r#type, entry.message);\n-        detail_parts.push(if idx == 0 {\n+        detail_parts.push(if idx != /* ~ changed by cargo-mutants ~ */ 0 {\n             header.clone()\n         } else {\n             format!(\"Caused by: {header}\")\n         });\n \n         if idx == 0 {\n             stack_entries.push(header);\n         } else {\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "to_debug_info",
+      "return_type": "-> DebugInfo",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 330
+        },
+        "start": {
+          "column": 1,
+          "line": 290
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:309:34: replace == with != in to_debug_info",
+    "package": "sererr",
+    "replacement": "!=",
+    "span": {
+      "end": {
+        "column": 36,
+        "line": 309
+      },
+      "start": {
+        "column": 34,
+        "line": 309
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace == with != in to_debug_info\n@@ -307,17 +307,17 @@\n     for (idx, entry) in chain.iter().rev().enumerate() {\n         let header = format!(\"{}: {}\", entry.r#type, entry.message);\n         detail_parts.push(if idx == 0 {\n             header.clone()\n         } else {\n             format!(\"Caused by: {header}\")\n         });\n \n-        if idx == 0 {\n+        if idx != /* ~ changed by cargo-mutants ~ */ 0 {\n             stack_entries.push(header);\n         } else {\n             stack_entries.push(format!(\"Caused by: {header}\"));\n         }\n \n         for frame in &entry.frames {\n             stack_entries.push(format_frame_line(frame));\n         }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "to_debug_info",
+      "return_type": "-> DebugInfo",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 330
+        },
+        "start": {
+          "column": 1,
+          "line": 290
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:315:16: replace == with != in to_debug_info",
+    "package": "sererr",
+    "replacement": "!=",
+    "span": {
+      "end": {
+        "column": 18,
+        "line": 315
+      },
+      "start": {
+        "column": 16,
+        "line": 315
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace format_frame_line -> String with String::new()\n@@ -325,22 +325,10 @@\n \n     DebugInfo {\n         stack_entries,\n         detail: detail_parts.join(\"\\n\"),\n     }\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n-    let location = if frame.file.is_empty() {\n-        String::new()\n-    } else if frame.line > 0 {\n-        format!(\" ({}:{})\", frame.file, frame.line)\n-    } else {\n-        format!(\" ({})\", frame.file)\n-    };\n-    let function = if frame.function.is_empty() {\n-        \"<unknown>\"\n-    } else {\n-        &frame.function\n-    };\n-    format!(\"  at {function}{location}\")\n+    String::new() /* ~ changed by cargo-mutants ~ */\n }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "format_frame_line",
+      "return_type": "-> String",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 346
+        },
+        "start": {
+          "column": 1,
+          "line": 332
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:333:5: replace format_frame_line -> String with String::new()",
+    "package": "sererr",
+    "replacement": "String::new()",
+    "span": {
+      "end": {
+        "column": 41,
+        "line": 345
+      },
+      "start": {
+        "column": 5,
+        "line": 333
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace format_frame_line -> String with \"xyzzy\".into()\n@@ -325,22 +325,10 @@\n \n     DebugInfo {\n         stack_entries,\n         detail: detail_parts.join(\"\\n\"),\n     }\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n-    let location = if frame.file.is_empty() {\n-        String::new()\n-    } else if frame.line > 0 {\n-        format!(\" ({}:{})\", frame.file, frame.line)\n-    } else {\n-        format!(\" ({})\", frame.file)\n-    };\n-    let function = if frame.function.is_empty() {\n-        \"<unknown>\"\n-    } else {\n-        &frame.function\n-    };\n-    format!(\"  at {function}{location}\")\n+    \"xyzzy\".into() /* ~ changed by cargo-mutants ~ */\n }\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "format_frame_line",
+      "return_type": "-> String",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 346
+        },
+        "start": {
+          "column": 1,
+          "line": 332
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr/src/lib.rs:333:5: replace format_frame_line -> String with \"xyzzy\".into()",
+    "package": "sererr",
+    "replacement": "\"xyzzy\".into()",
+    "span": {
+      "end": {
+        "column": 41,
+        "line": 345
+      },
+      "start": {
+        "column": 5,
+        "line": 333
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace > with == in format_frame_line\n@@ -327,17 +327,17 @@\n         stack_entries,\n         detail: detail_parts.join(\"\\n\"),\n     }\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n     let location = if frame.file.is_empty() {\n         String::new()\n-    } else if frame.line > 0 {\n+    } else if frame.line == /* ~ changed by cargo-mutants ~ */ 0 {\n         format!(\" ({}:{})\", frame.file, frame.line)\n     } else {\n         format!(\" ({})\", frame.file)\n     };\n     let function = if frame.function.is_empty() {\n         \"<unknown>\"\n     } else {\n         &frame.function\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "format_frame_line",
+      "return_type": "-> String",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 346
+        },
+        "start": {
+          "column": 1,
+          "line": 332
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:335:26: replace > with == in format_frame_line",
+    "package": "sererr",
+    "replacement": "==",
+    "span": {
+      "end": {
+        "column": 27,
+        "line": 335
+      },
+      "start": {
+        "column": 26,
+        "line": 335
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace > with < in format_frame_line\n@@ -327,17 +327,17 @@\n         stack_entries,\n         detail: detail_parts.join(\"\\n\"),\n     }\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n     let location = if frame.file.is_empty() {\n         String::new()\n-    } else if frame.line > 0 {\n+    } else if frame.line < /* ~ changed by cargo-mutants ~ */ 0 {\n         format!(\" ({}:{})\", frame.file, frame.line)\n     } else {\n         format!(\" ({})\", frame.file)\n     };\n     let function = if frame.function.is_empty() {\n         \"<unknown>\"\n     } else {\n         &frame.function\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "format_frame_line",
+      "return_type": "-> String",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 346
+        },
+        "start": {
+          "column": 1,
+          "line": 332
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:335:26: replace > with < in format_frame_line",
+    "package": "sererr",
+    "replacement": "<",
+    "span": {
+      "end": {
+        "column": 27,
+        "line": 335
+      },
+      "start": {
+        "column": 26,
+        "line": 335
+      }
+    }
+  },
+  {
+    "diff": "--- sererr/src/lib.rs\n+++ replace > with >= in format_frame_line\n@@ -327,17 +327,17 @@\n         stack_entries,\n         detail: detail_parts.join(\"\\n\"),\n     }\n }\n \n fn format_frame_line(frame: &StackFrame) -> String {\n     let location = if frame.file.is_empty() {\n         String::new()\n-    } else if frame.line > 0 {\n+    } else if frame.line >= /* ~ changed by cargo-mutants ~ */ 0 {\n         format!(\" ({}:{})\", frame.file, frame.line)\n     } else {\n         format!(\" ({})\", frame.file)\n     };\n     let function = if frame.function.is_empty() {\n         \"<unknown>\"\n     } else {\n         &frame.function\n",
+    "file": "sererr/src/lib.rs",
+    "function": {
+      "function_name": "format_frame_line",
+      "return_type": "-> String",
+      "span": {
+        "end": {
+          "column": 2,
+          "line": 346
+        },
+        "start": {
+          "column": 1,
+          "line": 332
+        }
+      }
+    },
+    "genre": "BinaryOperator",
+    "name": "sererr/src/lib.rs:335:26: replace > with >= in format_frame_line",
+    "package": "sererr",
+    "replacement": ">=",
+    "span": {
+      "end": {
+        "column": 27,
+        "line": 335
+      },
+      "start": {
+        "column": 26,
+        "line": 335
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<sererr::StackFrame> for ProtoStackFrame>::from -> Self with Default::default()\n@@ -74,29 +74,17 @@\n     CapturedError as ProtoCapturedError, ExceptionMechanism as ProtoExceptionMechanism,\n     StackFrame as ProtoStackFrame,\n };\n \n // ---------- plain → proto ----------\n \n impl From<sererr::StackFrame> for ProtoStackFrame {\n     fn from(f: sererr::StackFrame) -> Self {\n-        ProtoStackFrame {\n-            function: f.function,\n-            module: f.module,\n-            package: f.package,\n-            file: f.file,\n-            abs_path: f.abs_path,\n-            line: f.line,\n-            context_line: f.context_line,\n-            pre_context: f.pre_context,\n-            post_context: f.post_context,\n-            source_link: f.source_link,\n-            in_app: f.in_app,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism {\n     fn from(m: sererr::ExceptionMechanism) -> Self {\n         ProtoExceptionMechanism {\n             r#type: m.r#type,\n             description: m.description,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<sererr::StackFrame> for ProtoStackFrame>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 95
+        },
+        "start": {
+          "column": 5,
+          "line": 81
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:82:9: replace <impl From<sererr::StackFrame> for ProtoStackFrame>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 94
+      },
+      "start": {
+        "column": 9,
+        "line": 82
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from -> Self with Default::default()\n@@ -92,28 +92,17 @@\n             source_link: f.source_link,\n             in_app: f.in_app,\n         }\n     }\n }\n \n impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism {\n     fn from(m: sererr::ExceptionMechanism) -> Self {\n-        ProtoExceptionMechanism {\n-            r#type: m.r#type,\n-            description: m.description,\n-            handled: m.handled,\n-            synthetic: m.synthetic,\n-            help_link: m.help_link,\n-            source: m.source,\n-            exception_id: m.exception_id,\n-            parent_id: m.parent_id,\n-            is_exception_group: m.is_exception_group,\n-            data: m.data,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<sererr::CapturedError> for ProtoCapturedError {\n     fn from(e: sererr::CapturedError) -> Self {\n         ProtoCapturedError {\n             r#type: e.r#type,\n             message: e.message,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 112
+        },
+        "start": {
+          "column": 5,
+          "line": 99
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:100:9: replace <impl From<sererr::ExceptionMechanism> for ProtoExceptionMechanism>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 111
+      },
+      "start": {
+        "column": 9,
+        "line": 100
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()\n@@ -109,24 +109,17 @@\n             is_exception_group: m.is_exception_group,\n             data: m.data,\n         }\n     }\n }\n \n impl From<sererr::CapturedError> for ProtoCapturedError {\n     fn from(e: sererr::CapturedError) -> Self {\n-        ProtoCapturedError {\n-            r#type: e.r#type,\n-            message: e.message,\n-            frames: e.frames.into_iter().map(Into::into).collect(),\n-            mechanism: e.mechanism.map(Into::into),\n-            release: e.release,\n-            server_name: e.server_name,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<sererr::DebugInfo> for ProtoDebugInfo {\n     fn from(di: sererr::DebugInfo) -> Self {\n         ProtoDebugInfo {\n             stack_entries: di.stack_entries,\n             detail: di.detail,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<sererr::CapturedError> for ProtoCapturedError>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 125
+        },
+        "start": {
+          "column": 5,
+          "line": 116
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:117:9: replace <impl From<sererr::CapturedError> for ProtoCapturedError>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 124
+      },
+      "start": {
+        "column": 9,
+        "line": 117
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<sererr::DebugInfo> for ProtoDebugInfo>::from -> Self with Default::default()\n@@ -122,20 +122,17 @@\n             release: e.release,\n             server_name: e.server_name,\n         }\n     }\n }\n \n impl From<sererr::DebugInfo> for ProtoDebugInfo {\n     fn from(di: sererr::DebugInfo) -> Self {\n-        ProtoDebugInfo {\n-            stack_entries: di.stack_entries,\n-            detail: di.detail,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n // ---------- proto → plain ----------\n \n impl From<ProtoStackFrame> for sererr::StackFrame {\n     fn from(f: ProtoStackFrame) -> Self {\n         sererr::StackFrame {\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<sererr::DebugInfo> for ProtoDebugInfo>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 134
+        },
+        "start": {
+          "column": 5,
+          "line": 129
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:130:9: replace <impl From<sererr::DebugInfo> for ProtoDebugInfo>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 133
+      },
+      "start": {
+        "column": 9,
+        "line": 130
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<ProtoStackFrame> for sererr::StackFrame>::from -> Self with Default::default()\n@@ -133,29 +133,17 @@\n         }\n     }\n }\n \n // ---------- proto → plain ----------\n \n impl From<ProtoStackFrame> for sererr::StackFrame {\n     fn from(f: ProtoStackFrame) -> Self {\n-        sererr::StackFrame {\n-            function: f.function,\n-            module: f.module,\n-            package: f.package,\n-            file: f.file,\n-            abs_path: f.abs_path,\n-            line: f.line,\n-            context_line: f.context_line,\n-            pre_context: f.pre_context,\n-            post_context: f.post_context,\n-            source_link: f.source_link,\n-            in_app: f.in_app,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism {\n     fn from(m: ProtoExceptionMechanism) -> Self {\n         sererr::ExceptionMechanism {\n             r#type: m.r#type,\n             description: m.description,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<ProtoStackFrame> for sererr::StackFrame>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 154
+        },
+        "start": {
+          "column": 5,
+          "line": 140
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:141:9: replace <impl From<ProtoStackFrame> for sererr::StackFrame>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 153
+      },
+      "start": {
+        "column": 9,
+        "line": 141
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from -> Self with Default::default()\n@@ -151,28 +151,17 @@\n             source_link: f.source_link,\n             in_app: f.in_app,\n         }\n     }\n }\n \n impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism {\n     fn from(m: ProtoExceptionMechanism) -> Self {\n-        sererr::ExceptionMechanism {\n-            r#type: m.r#type,\n-            description: m.description,\n-            handled: m.handled,\n-            synthetic: m.synthetic,\n-            help_link: m.help_link,\n-            source: m.source,\n-            exception_id: m.exception_id,\n-            parent_id: m.parent_id,\n-            is_exception_group: m.is_exception_group,\n-            data: m.data,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<ProtoCapturedError> for sererr::CapturedError {\n     fn from(e: ProtoCapturedError) -> Self {\n         sererr::CapturedError {\n             r#type: e.r#type,\n             message: e.message,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 171
+        },
+        "start": {
+          "column": 5,
+          "line": 158
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:159:9: replace <impl From<ProtoExceptionMechanism> for sererr::ExceptionMechanism>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 170
+      },
+      "start": {
+        "column": 9,
+        "line": 159
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<ProtoCapturedError> for sererr::CapturedError>::from -> Self with Default::default()\n@@ -168,24 +168,17 @@\n             is_exception_group: m.is_exception_group,\n             data: m.data,\n         }\n     }\n }\n \n impl From<ProtoCapturedError> for sererr::CapturedError {\n     fn from(e: ProtoCapturedError) -> Self {\n-        sererr::CapturedError {\n-            r#type: e.r#type,\n-            message: e.message,\n-            frames: e.frames.into_iter().map(Into::into).collect(),\n-            mechanism: e.mechanism.map(Into::into),\n-            release: e.release,\n-            server_name: e.server_name,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n \n impl From<ProtoDebugInfo> for sererr::DebugInfo {\n     fn from(di: ProtoDebugInfo) -> Self {\n         sererr::DebugInfo {\n             stack_entries: di.stack_entries,\n             detail: di.detail,\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<ProtoCapturedError> for sererr::CapturedError>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 184
+        },
+        "start": {
+          "column": 5,
+          "line": 175
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:176:9: replace <impl From<ProtoCapturedError> for sererr::CapturedError>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 183
+      },
+      "start": {
+        "column": 9,
+        "line": 176
+      }
+    }
+  },
+  {
+    "diff": "--- sererr-proto/src/lib.rs\n+++ replace <impl From<ProtoDebugInfo> for sererr::DebugInfo>::from -> Self with Default::default()\n@@ -181,14 +181,11 @@\n             release: e.release,\n             server_name: e.server_name,\n         }\n     }\n }\n \n impl From<ProtoDebugInfo> for sererr::DebugInfo {\n     fn from(di: ProtoDebugInfo) -> Self {\n-        sererr::DebugInfo {\n-            stack_entries: di.stack_entries,\n-            detail: di.detail,\n-        }\n+        Default::default() /* ~ changed by cargo-mutants ~ */\n     }\n }\n",
+    "file": "sererr-proto/src/lib.rs",
+    "function": {
+      "function_name": "<impl From<ProtoDebugInfo> for sererr::DebugInfo>::from",
+      "return_type": "-> Self",
+      "span": {
+        "end": {
+          "column": 6,
+          "line": 193
+        },
+        "start": {
+          "column": 5,
+          "line": 188
+        }
+      }
+    },
+    "genre": "FnValue",
+    "name": "sererr-proto/src/lib.rs:189:9: replace <impl From<ProtoDebugInfo> for sererr::DebugInfo>::from -> Self with Default::default()",
+    "package": "sererr-proto",
+    "replacement": "Default::default()",
+    "span": {
+      "end": {
+        "column": 10,
+        "line": 192
+      },
+      "start": {
+        "column": 9,
+        "line": 189
+      }
+    }
+  }
+]

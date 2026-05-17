@@ -1,0 +1,15 @@
+{
+  "captured_error": {
+    "type": "EmptyError",
+    "message": "no frames",
+    "frames": [],
+    "mechanism": {
+      "type": "generic",
+      "handled": true,
+      "exception_id": 0,
+      "parent_id": 0
+    },
+    "release": "",
+    "server_name": ""
+  }
+}

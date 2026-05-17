@@ -1,0 +1,23 @@
+# sererr canonical proto module.
+#
+# Linted by `buf lint` and consumed by every language's
+# `buf generate` step (see buf.gen.yaml in each packages/<lang>/).
+# Cross-repo importers (angzarr-project etc.) point at this directory
+# via -I or buf module reference.
+
+version: v2
+modules:
+  - path: .
+    name: buf.build/sererr/sererr
+lint:
+  use:
+    - STANDARD
+  # `google.rpc.DebugInfo` is vendored here for the ToDebugInfo
+  # adapter; the upstream proto reserves the package name and we
+  # intentionally re-publish it without a `Sererr` prefix so consumers
+  # can round-trip with google.rpc-aware tooling.
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+breaking:
+  use:
+    - FILE

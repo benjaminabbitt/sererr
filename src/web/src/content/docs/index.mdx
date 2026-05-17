@@ -1,0 +1,59 @@
+---
+title: sererr
+description: Sentry-compat structured stack-trace + error-chain capture, as a portable protobuf schema with hand-tuned producer libraries in six languages.
+template: splash
+hero:
+  tagline: One proto, six languages. Capture an error chain with structured frames; Sentry-tooling-compatible on the wire.
+  actions:
+    - text: Why sererr
+      link: /why/
+      icon: right-arrow
+    - text: GitHub
+      link: https://github.com/sererr/sererr
+      icon: external
+      variant: minimal
+---
+
+## What is sererr
+
+A protobuf schema and matching language libraries for structured error
+capture. Field-named to be **compatible with Sentry's Exception and
+StackFrame interfaces**, so existing Sentry-aware tooling can ingest
+captures with a thin proto→JSON adapter.
+
+## What it gives you
+
+- **One-line capture per language** — walk the error chain, normalize
+  frame ordering, stamp linkage IDs, apply sensible `in_app` defaults.
+- **Source bundling at capture time** — `context_line` / `pre_context` /
+  `post_context` populated by producers that embed their own source
+  (rust-embed, `importlib.resources`, `//go:embed`, JAR resources,
+  embedded .NET resources). Operators read source in the failure detail
+  view, no alt-tab.
+- **Lazy resolution fallback** — captures without embedded source can be
+  resolved at read time from the `release` git SHA.
+- **Sentry JSON adapter** — convert captures to Sentry's `exception.values`
+  shape for forwarding.
+- **Cross-language conformance corpus** — every language encodes the
+  same fixtures to identical wire bytes.
+
+## Supported languages
+
+| Language | Package |
+|---|---|
+| Rust | `sererr` on crates.io |
+| Python | `sererr` on PyPI |
+| Go | `sererr.fyi/sererr` |
+| Java | `fyi.sererr:sererr` on Maven Central |
+| Kotlin | `fyi.sererr:sererr-kotlin` on Maven Central |
+| C# | `Sererr` on NuGet |
+
+All six release **synchronized**: a single version number, a single
+release commit. `sererr@1.2.0` means the same thing in every language.
+
+## Status
+
+Bootstrap. The proto schema and package skeletons exist; capture
+implementations land per-language. See [GitHub
+milestones](https://github.com/sererr/sererr/milestones) for current
+progress.

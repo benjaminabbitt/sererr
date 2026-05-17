@@ -8,6 +8,13 @@ export default {
   testRunner: 'vitest',
   coverageAnalysis: 'perTest',
 
+  // Mutate the project tree in place rather than copying to a sandbox.
+  // The fixture-roundtrip test reads files from
+  // `<repo>/tests/conformance/fixtures/` (outside packages/typescript)
+  // via relative path; Stryker's default sandbox would copy
+  // packages/typescript alone and the test would ENOENT.
+  inPlace: true,
+
   mutate: [
     'src/**/*.ts',
     '!src/proto/gen/**/*.ts', // exclude buf-generated bindings

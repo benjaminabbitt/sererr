@@ -46,6 +46,16 @@ skip_covered = false
 
 [tool.mutmut]
 paths_to_mutate = "src/sererr/"
+# Exclude buf-generated protobuf descriptor code. The generated
+# ``*_pb2.py`` files are build artifacts (not authored source) and
+# consist largely of dead-code branches (``if not _descriptor._USE_C_DESCRIPTORS``),
+# permissive version checks (``ValidateProtobufRuntimeVersion`` accepts
+# a range), and unused symbol-DB assignments — so the vast majority of
+# mutations on them are equivalent mutations that no test can kill.
+# This matches the ``[tool.coverage.run] omit`` rule already in place
+# for the same files and the conventional Python project policy of
+# excluding generated code from quality metrics.
+paths_to_exclude = "_gen"
 runner = "python -m pytest -x -q"
 tests_dir = "tests/"
 

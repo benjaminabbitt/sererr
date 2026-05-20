@@ -358,7 +358,8 @@ fn frame_with_file_and_line_renders_with_parens_and_colon() {
     };
     let di = to_debug_info(&[captured]);
     assert!(
-        di.stack_entries.contains(&"  at fn_a (src/x.rs:42)".to_string()),
+        di.stack_entries
+            .contains(&"  at fn_a (src/x.rs:42)".to_string()),
         "expected '  at fn_a (src/x.rs:42)' in stack_entries; got {:?}",
         di.stack_entries
     );
@@ -381,7 +382,8 @@ fn frame_with_file_but_no_line_renders_without_colon() {
     };
     let di = to_debug_info(&[captured]);
     assert!(
-        di.stack_entries.contains(&"  at fn_b (src/y.rs)".to_string()),
+        di.stack_entries
+            .contains(&"  at fn_b (src/y.rs)".to_string()),
         "expected '  at fn_b (src/y.rs)' (no line); got {:?}",
         di.stack_entries
     );

@@ -17,7 +17,7 @@ set shell := ["bash", "-c"]
 TOP := `git rev-parse --show-toplevel`
 LANGS := "csharp go java kotlin python rust typescript"
 
-CONTAINER_CMD := `command -v docker 2>/dev/null || command -v podman 2>/dev/null || echo ""`
+CONTAINER_CMD := `command -v docker 2>/dev/null || echo ""`
 CONTAINER_RUN := CONTAINER_CMD + " run --rm -u $(id -u):$(id -g)"
 IMAGE_PREFIX := "ghcr.io/sererr/sererr-"
 IMAGE_TAG := "latest"

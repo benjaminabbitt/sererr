@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"google.golang.org/protobuf/proto"
-	pb "sererr.fyi/sererr/packages/go/pb/sererr"
+	pb "sererr.fyi/sererr/packages/go/pb/sererr/v1"
 )
 
 // Why: cross-language conformance hinges on byte-equivalent encodings.

@@ -16,12 +16,12 @@ import type {
   StackFrame as ProtoStackFrame,
   ExceptionMechanism as ProtoExceptionMechanism,
   CapturedError as ProtoCapturedError,
-} from './gen/sererr/sererr_pb.js';
+} from './gen/sererr/v1/sererr_pb.js';
 import {
   StackFrameSchema,
   ExceptionMechanismSchema,
   CapturedErrorSchema,
-} from './gen/sererr/sererr_pb.js';
+} from './gen/sererr/v1/sererr_pb.js';
 import type {
   CapturedError,
   ExceptionMechanism,

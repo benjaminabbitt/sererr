@@ -38,7 +38,7 @@ mutants:
     gremlins unleash --threshold-efficacy 85 ./...
 
 proto-gen:
-    docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp \
+    docker run --rm $(if docker info 2>/dev/null | grep -q rootless; then echo "-u 0:0"; else echo "-u $(id -u):$(id -g)"; fi) -e HOME=/tmp \
       -v "{{TOP}}:/workspace" -w /workspace/packages/go \
       bufbuild/buf:latest generate
 

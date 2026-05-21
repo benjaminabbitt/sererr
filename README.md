@@ -17,7 +17,7 @@ The closest options are all flat text:
 existing Sentry-aware tooling can ingest captures with a thin proto→JSON
 adapter. The shape is documented in
 [`docs/spec.md`](docs/spec.md); the canonical proto lives in
-[`proto/sererr/sererr.proto`](proto/sererr/sererr.proto).
+[`proto/sererr/v1/sererr.proto`](proto/sererr/v1/sererr.proto).
 
 ## What's in here
 

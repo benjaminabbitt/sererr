@@ -1,7 +1,7 @@
 package sererr
 
 import (
-	pb "sererr.fyi/sererr/packages/go/pb/sererr"
+	pb "sererr.fyi/sererr/packages/go/pb/sererr/v1"
 )
 
 // ToProto converts a plain StackFrame into its proto wire form.

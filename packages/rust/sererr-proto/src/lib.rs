@@ -56,7 +56,7 @@
 mod gen;
 
 /// Generated proto types for `sererr.v1`. Mirrors the schema in
-/// `proto/sererr/sererr.proto`.
+/// `proto/sererr/v1/sererr.proto`.
 pub mod sererr_v1 {
     pub use crate::gen::sererr::v1::*;
 }

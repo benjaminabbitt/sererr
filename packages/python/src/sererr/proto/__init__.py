@@ -50,7 +50,7 @@ def _load(module_name: str, relative_path: str):
     return module
 
 
-sererr_pb2 = _load("sererr._gen_sererr_pb2", "sererr/sererr_pb2.py")
+sererr_pb2 = _load("sererr._gen_sererr_pb2", "sererr/v1/sererr_pb2.py")
 debug_info_pb2 = _load("sererr._gen_debug_info_pb2", "google/rpc/debug_info_pb2.py")
 
 

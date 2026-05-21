@@ -12,7 +12,7 @@ managed:
   override:
     - file_option: csharp_namespace
       value: Sererr.V1
-      path: sererr/sererr.proto
+      path: sererr/v1/sererr.proto
 plugins:
   - remote: buf.build/protocolbuffers/csharp
     out: Generated

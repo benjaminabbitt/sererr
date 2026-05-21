@@ -18,9 +18,8 @@ import java.util.TreeMap;
  * Converts between sererr's plain Java types
  * ({@link fyi.sererr.CapturedError} et al.) and the proto-generated
  * types ({@code fyi.sererr.v1.CapturedError} et al. — generated from
- * {@code proto/sererr/sererr.proto}; the Gradle build relocates them
- * into the {@code v1} sub-package to avoid colliding with the plain
- * types).
+ * {@code proto/sererr/v1/sererr.proto}; the file path mirrors the
+ * proto package so future versions can live at {@code v2/} etc.).
  *
  * <p>The {@link #encode(CapturedError)} method uses
  * {@link CodedOutputStream#useDeterministicSerialization()} so map

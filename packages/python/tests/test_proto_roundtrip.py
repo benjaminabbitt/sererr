@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from sererr.proto import encode, from_proto, to_proto
+from sererr.proto import encode, from_proto
 from sererr.types import (
     CapturedError,
     ExceptionMechanism,

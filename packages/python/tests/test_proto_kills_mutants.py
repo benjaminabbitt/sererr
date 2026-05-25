@@ -9,9 +9,7 @@ from __future__ import annotations
 import sys
 import pytest
 
-import sererr.proto as proto_mod
 from sererr.proto import (
-    _GEN_ROOT,
     _load,
     debug_info_pb2,
     debug_info_to_proto,

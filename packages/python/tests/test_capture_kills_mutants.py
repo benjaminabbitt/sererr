@@ -8,10 +8,8 @@ Rust ``capture_test.rs`` pattern that took kill rate to 100%.
 
 from __future__ import annotations
 
-import pytest
 
 from sererr import capture
-from sererr.types import CapturedError, StackFrame
 
 
 class _LeafA(Exception):

@@ -6,7 +6,6 @@ exception-chain semantics (``__cause__`` / ``__context__`` /
 ``__suppress_context__``).
 """
 
-import pytest
 
 from sererr import capture
 

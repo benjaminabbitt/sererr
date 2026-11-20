@@ -10,8 +10,8 @@ import (
 	"strings"
 	"testing"
 
-	pb "github.com/angzarr-io/sererr/packages/go/pb/sererr/v1"
 	"google.golang.org/protobuf/proto"
+	pb "sererr.fyi/sererr/packages/go/pb/sererr/v1"
 )
 
 // Why: cross-language conformance hinges on byte-equivalent encodings.

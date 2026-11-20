@@ -4,7 +4,7 @@ description: Capture errors with the sererr Go package.
 ---
 
 ```go
-import "github.com/angzarr-io/sererr/packages/go"
+import "sererr.fyi/sererr/packages/go"
 
 frames := sererr.CaptureFrames()  // MUST be called at originating site
 chain := sererr.Capture(err, frames, release)
@@ -48,7 +48,7 @@ import (
     "runtime"
     "strings"
 
-    sererr "github.com/angzarr-io/sererr/packages/go"
+    sererr "sererr.fyi/sererr/packages/go"
 )
 
 func Capture(err error, frames []*sererr.StackFrame, release string) []*sererr.CapturedError {

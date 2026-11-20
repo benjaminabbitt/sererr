@@ -14,8 +14,8 @@ import (
 	"github.com/cucumber/godog"
 	"google.golang.org/protobuf/proto"
 
-	sererr "github.com/angzarr-io/sererr/packages/go"
-	pb "github.com/angzarr-io/sererr/packages/go/pb/sererr"
+	sererr "sererr.fyi/sererr/packages/go"
+	pb "sererr.fyi/sererr/packages/go/pb/sererr"
 )
 
 // ============================================================================

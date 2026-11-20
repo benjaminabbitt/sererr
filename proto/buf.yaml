@@ -8,7 +8,7 @@
 version: v2
 modules:
   - path: .
-    name: buf.build/angzarr-io/sererr
+    name: buf.build/sererr/sererr
 lint:
   use:
     - STANDARD

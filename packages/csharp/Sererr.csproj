@@ -14,7 +14,7 @@
     <Description>Sentry-compat structured stack-trace + error-chain capture.</Description>
     <PackageProjectUrl>https://sererr.fyi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sererr/sererr</RepositoryUrl>
-    <PackageLicenseExpression>MIT OR BSD-3-Clause</PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0 OR BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>error;stack-trace;sentry;diagnostics</PackageTags>
 
     <!-- Embed PDBs so stack frames have line numbers in release builds. -->

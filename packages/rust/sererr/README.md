@@ -21,4 +21,4 @@ full guide.
 
 ## License
 
-Dual MIT / BSD-3-Clause. See the repository root for the license texts.
+Dual-licensed under Apache-2.0 OR BSD-3-Clause. See LICENSE-APACHE and LICENSE-BSD at the repository root.

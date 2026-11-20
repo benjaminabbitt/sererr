@@ -110,7 +110,7 @@ publishing {
                 description = "Kotlin API for the sererr error-capture proto."
                 url = "https://sererr.fyi"
                 licenses {
-                    license { name = "MIT"; url = "https://opensource.org/licenses/MIT" }
+                    license { name = "Apache-2.0"; url = "https://www.apache.org/licenses/LICENSE-2.0" }
                     license { name = "BSD-3-Clause"; url = "https://opensource.org/licenses/BSD-3-Clause" }
                 }
             }

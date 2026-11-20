@@ -134,5 +134,5 @@ RustRover, `packages/java/` in IntelliJ, etc.
 
 ## License
 
-Dual-licensed under MIT and BSD 3-Clause. See [LICENSE-MIT](LICENSE-MIT)
-and [LICENSE-BSD-3-Clause](LICENSE-BSD-3-Clause).
+Dual-licensed under `Apache-2.0 OR BSD-3-Clause`. See
+[LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-BSD](LICENSE-BSD).

@@ -13,4 +13,4 @@ content.
 
 ## License
 
-Dual MIT / BSD-3-Clause.
+Dual-licensed under Apache-2.0 OR BSD-3-Clause. See LICENSE-APACHE and LICENSE-BSD at the repository root.

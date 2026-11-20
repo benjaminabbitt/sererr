@@ -21,7 +21,7 @@
     "proto:gen": "buf generate ../../proto --template buf.gen.yaml"
   },
   "keywords": ["error", "stack-trace", "sentry", "diagnostics"],
-  "license": "MIT OR BSD-3-Clause",
+  "license": "Apache-2.0 OR BSD-3-Clause",
   "homepage": "https://sererr.fyi",
   "repository": {
     "type": "git",

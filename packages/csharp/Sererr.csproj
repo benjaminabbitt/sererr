@@ -13,7 +13,7 @@
     <Authors>sererr contributors</Authors>
     <Description>Sentry-compat structured stack-trace + error-chain capture.</Description>
     <PackageProjectUrl>https://sererr.fyi</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/angzarr-io/sererr</RepositoryUrl>
+    <RepositoryUrl>https://github.com/sererr/sererr</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0 OR BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>error;stack-trace;sentry;diagnostics</PackageTags>
 

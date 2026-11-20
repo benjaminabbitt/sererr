@@ -19,7 +19,7 @@ LANGS := "csharp go java kotlin python rust typescript"
 
 CONTAINER_CMD := `command -v docker 2>/dev/null || echo ""`
 CONTAINER_RUN := CONTAINER_CMD + " run --rm -u $(id -u):$(id -g)"
-IMAGE_PREFIX := "ghcr.io/angzarr-io/sererr-"
+IMAGE_PREFIX := "ghcr.io/sererr/sererr-"
 IMAGE_TAG := "latest"
 
 default:

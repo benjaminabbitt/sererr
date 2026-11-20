@@ -25,7 +25,7 @@
   "homepage": "https://sererr.fyi",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angzarr-io/sererr.git",
+    "url": "git+https://github.com/sererr/sererr.git",
     "directory": "packages/typescript"
   },
   "engines": {

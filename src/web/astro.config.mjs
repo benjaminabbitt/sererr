@@ -10,7 +10,7 @@ export default defineConfig({
 			title: 'sererr',
 			description: 'Sentry-compat structured stack-trace + error-chain capture',
 			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/angzarr-io/sererr' },
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/sererr/sererr' },
 			],
 			sidebar: [
 				{

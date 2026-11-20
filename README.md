@@ -27,7 +27,7 @@ Seven language packages, each shipping the same capabilities:
 |---|---|---|
 | Rust | crates.io `sererr` | [`packages/rust`](packages/rust) |
 | Python | PyPI `sererr` | [`packages/python`](packages/python) |
-| Go | `sererr.fyi/sererr` | [`packages/go`](packages/go) |
+| Go | `github.com/angzarr-io/sererr` | [`packages/go`](packages/go) |
 | Java | Maven Central `fyi.sererr:sererr` | [`packages/java`](packages/java) |
 | Kotlin | Maven Central `fyi.sererr:sererr-kotlin` | [`packages/kotlin`](packages/kotlin) |
 | C# | NuGet `Sererr` | [`packages/csharp`](packages/csharp) |

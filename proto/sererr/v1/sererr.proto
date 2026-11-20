@@ -49,7 +49,7 @@ syntax = "proto3";
 package sererr.v1;
 
 option csharp_namespace = "Sererr";
-option go_package = "sererr.fyi/sererr/packages/go;sererr";
+option go_package = "github.com/angzarr-io/sererr/packages/go;sererr";
 option java_multiple_files = true;
 option java_package = "fyi.sererr";
 

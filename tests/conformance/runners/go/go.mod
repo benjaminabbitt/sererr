@@ -1,11 +1,11 @@
-module sererr.fyi/sererr/tests/conformance/runners/go
+module github.com/angzarr-io/sererr/tests/conformance/runners/go
 
 go 1.22
 
 require (
 	github.com/cucumber/godog v0.14.1
 	google.golang.org/protobuf v1.34.0
-	sererr.fyi/sererr/packages/go v0.0.0
+	github.com/angzarr-io/sererr/packages/go v0.0.0
 )
 
 require (
@@ -18,4 +18,4 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 )
 
-replace sererr.fyi/sererr/packages/go => ../../../../packages/go
+replace github.com/angzarr-io/sererr/packages/go => ../../../../packages/go

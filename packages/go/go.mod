@@ -1,4 +1,4 @@
-module sererr.fyi/sererr/packages/go
+module github.com/angzarr-io/sererr/packages/go
 
 go 1.22
 

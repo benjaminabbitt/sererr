@@ -240,7 +240,7 @@ jobs:
             Published to:
             - crates.io: `sererr`, `sererr-proto`, `sererr-flate`
             - PyPI: `sererr`
-            - pkg.go.dev: `sererr.fyi/sererr/packages/go`
+            - pkg.go.dev: `github.com/angzarr-io/sererr/packages/go`
             - Maven Central: `fyi.sererr:sererr`, `fyi.sererr:sererr-kotlin`
             - NuGet: `Sererr`
             - npm: `sererr`

@@ -4,7 +4,7 @@ description: The canonical sererr proto definitions.
 ---
 
 The canonical schema lives in
-[`proto/sererr/sererr.proto`](https://github.com/sererr/sererr/blob/main/proto/sererr/sererr.proto).
+[`proto/sererr/sererr.proto`](https://github.com/angzarr-io/sererr/blob/main/proto/sererr/sererr.proto).
 Three messages: `StackFrame`, `ExceptionMechanism`, `CapturedError`.
 
 Cause chains are a **flat array** carried by the enclosing message

@@ -11,7 +11,7 @@ edition = "2021"
 authors = ["sererr contributors"]
 license = "Apache-2.0 OR BSD-3-Clause"
 homepage = "https://sererr.fyi"
-repository = "https://github.com/sererr/sererr"
+repository = "https://github.com/angzarr-io/sererr"
 keywords = ["error", "stack-trace", "sentry", "backtrace", "diagnostics"]
 categories = ["development-tools::debugging"]
 

@@ -6,7 +6,7 @@ description: Cross-language byte-equivalence tests.
 > *Stub.*
 
 A shared corpus of fixtures + expected wire bytes lives in
-[`tests/conformance/`](https://github.com/sererr/sererr/tree/main/tests/conformance).
+[`tests/conformance/`](https://github.com/angzarr-io/sererr/tree/main/tests/conformance).
 
 Every language runs both directions per fixture:
 
@@ -18,5 +18,5 @@ Every language runs both directions per fixture:
 The conformance corpus IS the wire-format spec — packages that fail
 conformance can't release.
 
-See the [tests README](https://github.com/sererr/sererr/tree/main/tests/conformance#readme)
+See the [tests README](https://github.com/angzarr-io/sererr/tree/main/tests/conformance#readme)
 for the fixture format and runner conventions.
